@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --orange: hsl(26, 100%, 55%);
+    --paleOrange: hsl(25, 100%, 94%);
+
+    --veryDarkBlue: hsl(220, 13%, 13%);
+    --darkGrayishBlue: hsl(219, 9%, 45%);
+    --grayishBlue: hsl(220, 14%, 75%);
+    --lightGrayishBlue: hsl(223, 64%, 98%);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%); /*(with 75% opacity for lightbox background)*/
+  }
+
+  body {
+    font-family: "Kumbh Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+  }
+}
+
+@layer components {
+  header {
+    nav {
+      @apply flex h-full w-full max-w-5xl items-center justify-start gap-4 sm:h-28 sm:gap-10 sm:border-b sm:border-(--grayishBlue);
+
+      #hamburger-btn {
+        @apply z-50 h-4 w-4 cursor-pointer bg-[url("../images/icon-menu.svg")] bg-contain bg-center bg-no-repeat sm:hidden;
+      }
+
+      #logo {
+        @apply h-5 w-35 bg-[url("../images/logo.svg")] bg-contain bg-top-left bg-no-repeat sm:h-7 sm:w-36;
+      }
+
+      #main-menu {
+        @apply absolute top-0 -left-70 z-50 flex h-dvh w-70 flex-col items-start justify-start gap-4 bg-(--white) p-4 pt-25 transition-all duration-500 ease-linear sm:static sm:h-full sm:w-auto sm:flex-row sm:items-center sm:gap-6 sm:p-0;
+
+        li {
+          @apply border-b-4 border-transparent pb-1 font-bold text-(--black) transition duration-300 ease-in-out hover:border-(--orange) sm:py-11 sm:text-sm sm:font-normal sm:text-(--darkGrayishBlue);
+        }
+      }
+      #cart-btn {
+        @apply relative mr-2 ml-auto h-5 w-6 cursor-pointer fill-(--black) sm:mr-0 sm:fill-(--darkGrayishBlue);
+        #badge {
+          @apply absolute -top-2 -right-2 rounded-full bg-(--orange) px-2 text-xs font-bold text-(--white);
+        }
+      }
+      #avatar {
+        @apply aspect-square w-8 cursor-pointer rounded-full bg-[url("../images/image-avatar.png")] bg-cover bg-center bg-no-repeat outline outline-transparent transition duration-300 ease-in-out hover:outline-(--orange) sm:w-12 sm:outline-2;
+      }
+    }
+  }
+
+  #gallery {
+    @apply grid w-full gap-4 sm:basis-1/2 sm:p-8;
+
+    .carousel {
+      @apply relative;
+    }
+    .carousel-item {
+      @apply aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:cursor-pointer sm:rounded-2xl;
+    }
+    button {
+      @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90 sm:hidden;
+      &.carousel-btn-prev {
+        @apply left-4;
+        svg {
+          @apply h-5 w-4;
+        }
+      }
+      &.carousel-btn-next {
+        @apply right-4;
+        svg {
+          @apply h-5 w-3;
+        }
+      }
+      &:active {
+        svg {
+          @apply scale-90;
+        }
+      }
+    }
+    .thumbnails {
+      @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
+    }
+  }
+
+  #offer-card {
+    @apply grid gap-4 px-4 sm:basis-1/2 sm:p-8;
+    h2 {
+      @apply text-xs font-bold tracking-widest text-(--darkGrayishBlue) uppercase;
+    }
+    h1 {
+      @apply text-3xl font-bold;
+    }
+    p {
+      @apply text-(--darkGrayishBlue);
+    }
+    #price-tag {
+      @apply flex items-center justify-between gap-2 sm:flex-col sm:items-start;
+      h4 {
+        @apply text-3xl font-bold sm:text-2xl;
+        span {
+          @apply ml-2 inline-block rounded-md bg-(--black) px-2 align-[6px] text-base font-bold text-(--white) sm:align-[3px];
+        }
+      }
+      h5 {
+        @apply text-base font-bold text-(--darkGrayishBlue) line-through;
+      }
+    }
+
+    .counter-container {
+      @apply flex w-full flex-col items-center justify-center gap-4 sm:flex-row;
+      .counter {
+        @apply flex h-10 w-full items-center justify-between rounded-lg bg-(--lightGrayishBlue) sm:basis-2/5;
+        button {
+          @apply basis-10 cursor-pointer rounded-lg fill-(--orange) p-4 transition duration-300 ease-in-out hover:fill-(--paleOrange) active:fill-(--orange);
+          &:disabled {
+            @apply cursor-auto fill-(--paleOrange);
+          }
+        }
+        #counter {
+          @apply text-base font-bold;
+        }
+      }
+      [type="submit"] {
+        @apply flex h-10 w-full flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold transition duration-300 ease-in-out hover:bg-(--paleOrange);
+      }
+    }
+  }
+
+  #cart {
+    @apply absolute top-22 right-1/2 z-50 hidden h-70 w-95/100 max-w-90 translate-x-1/2 grid-rows-4 rounded-lg bg-(--white) shadow-2xl/50 sm:right-5 sm:translate-x-0;
+
+    h2 {
+      @apply border-b border-(--grayishBlue) p-4 text-base font-bold;
+    }
+    h3 {
+      @apply self-end justify-self-center text-base font-bold text-(--darkGrayishBlue);
+    }
+  }
+}
