@@ -25,7 +25,6 @@ export const addToCart = (badgeSpan: HTMLSpanElement) => {
 export const openLightbox = (
   galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-
   lightbox: HTMLElement,
 ) => {
   const windowInnerWidthPX = window.innerWidth;
@@ -33,7 +32,7 @@ export const openLightbox = (
     getComputedStyle(document.documentElement).fontSize,
   );
   const windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
-  if (windowInnerWidthREM < store.smBreakpoint) return;
+  if (windowInnerWidthREM < store.smBreakpointRem) return;
   lightbox.classList.add("sm:flex");
 
   document.addEventListener("keyup", (event: KeyboardEvent) => {
@@ -52,23 +51,72 @@ export const compute = (
   renderCounter(counterBtn, counterSpan);
 };
 
-export const openCart = (aside: HTMLElement) => {
+export const openCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+  window.addEventListener("mousemove", () => checkWindowWidth(aside, cartBtn));
   aside.classList.toggle("grid");
+  window.addEventListener("resize", () => checkWindowWidth(aside, cartBtn));
+  store.isCartOpen = !store.isCartOpen;
+  if (!store.isCartOpen) return;
+  document.addEventListener("keyup", (event: KeyboardEvent) => {
+    if (event.code === "Escape" && aside.classList.contains("grid")) {
+      aside.classList.remove("grid");
+      store.isCartOpen = false;
+      return;
+    }
+  });
 };
 
-export const openMenu = (
+const checkWindowWidth = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+  console.log(1125);
+
+  const windowInnerWidthPX = window.innerWidth;
+  const clientFontSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
+  const windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
+  const rect = cartBtn.getBoundingClientRect();
+  if (windowInnerWidthREM > store.lgBreakpointRem) {
+    console.log(rect);
+
+    return (aside.style.left = `${rect.left - 360}px`);
+  }
+  if (windowInnerWidthREM > store.smBreakpointRem) {
+    console.log(rect);
+
+    return (aside.style.left = `${rect.left - 500}px`);
+  }
+  aside.style.left = "";
+};
+
+export const handleMenu = (
   mainMenu: HTMLUListElement,
   hamburgerBtn: HTMLButtonElement,
+  bgDark: HTMLDivElement,
 ) => {
-  const bgDark = document.querySelector<HTMLDivElement>("#bg-dark")!;
+  if (store.isMenuOpen) return closeMenu(mainMenu, hamburgerBtn, bgDark);
+  openMenu(mainMenu, hamburgerBtn, bgDark);
+};
 
-  mainMenu.classList.toggle("left-0");
-  bgDark.classList.toggle("hidden");
+const openMenu = (
+  mainMenu: HTMLUListElement,
+  hamburgerBtn: HTMLButtonElement,
+  bgDark: HTMLDivElement,
+) => {
+  mainMenu.classList.add("left-0");
+  bgDark.classList.remove("hidden");
+  hamburgerBtn.style.backgroundImage = `url("../images/icon-close.svg")`;
   store.isMenuOpen = !store.isMenuOpen;
-  if (store.isMenuOpen)
-    return (hamburgerBtn.style.backgroundImage = `url("../images/icon-close.svg")`);
+};
 
+export const closeMenu = (
+  mainMenu: HTMLUListElement,
+  hamburgerBtn: HTMLButtonElement,
+  bgDark: HTMLDivElement,
+) => {
+  mainMenu.classList.remove("left-0");
+  bgDark.classList.add("hidden");
   hamburgerBtn.style.backgroundImage = `url("../images/icon-menu.svg")`;
+  store.isMenuOpen = false;
 };
 
 const removeActiveClass = (
@@ -143,7 +191,6 @@ export const slideImage = (
       store.index++;
       break;
   }
-
   removeActiveClass(galleryThumbnails, lightboxThumbnails);
 };
 

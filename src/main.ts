@@ -5,8 +5,9 @@ import {
   openLightbox,
   closeLightbox,
   compute,
+  closeMenu,
   openCart,
-  openMenu,
+  handleMenu,
   renderCounter,
   showImage,
   showImageFromThumbnail,
@@ -22,6 +23,7 @@ const lightbox = document.querySelector<HTMLDivElement>("#lightbox");
 if (!header || !main || !aside || !lightbox)
   throw new Error("Missing required elements.");
 
+const bgDark = header.querySelector<HTMLDivElement>("#bg-dark")!;
 const hamburgerBtn = header.querySelector<HTMLButtonElement>("#hamburger-btn")!;
 const badgeSpan = header.querySelector<HTMLSpanElement>("#badge")!;
 const cartBtn = header.querySelector<HTMLButtonElement>("#cart-btn")!;
@@ -50,8 +52,10 @@ const lightboxCloseBtn = lightbox.querySelector<HTMLButtonElement>(
 const lightboxBtns =
   lightbox.querySelectorAll<HTMLButtonElement>(".lightbox-btn")!;
 // Events ///////////////////////////////////////////////////////
-cartBtn.addEventListener("click", () => openCart(aside));
-hamburgerBtn.addEventListener("click", () => openMenu(mainMenu, hamburgerBtn));
+cartBtn.addEventListener("click", () => openCart(aside, cartBtn));
+hamburgerBtn.addEventListener("click", () =>
+  handleMenu(mainMenu, hamburgerBtn, bgDark),
+);
 carouselBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
     slideImage(event, galleryThumbnails, lightboxThumbnails),
@@ -70,6 +74,22 @@ counterBtns.forEach((button) =>
     compute(event, counterBtns[0], counterSpan),
   ),
 );
+
+store.menu.forEach((menuItem) => {
+  const li = document.createElement("li") as HTMLLIElement;
+  const link = document.createElement("a") as HTMLAnchorElement;
+  link.setAttribute("href", "#");
+  link.innerHTML = menuItem;
+  li.appendChild(link);
+  mainMenu.appendChild(li);
+  li.addEventListener("click", () =>
+    handleMenu(mainMenu, hamburgerBtn, bgDark),
+  );
+});
+
+store.smBreakpoint.addEventListener("change", (event) => {
+  if (event.matches) closeMenu(mainMenu, hamburgerBtn, bgDark);
+});
 store.productThumbnails.forEach((item) => {
   const galleryThumbnail = document.createElement("div") as HTMLDivElement;
   const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
