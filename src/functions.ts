@@ -158,6 +158,6 @@ export const slideImage = (
 };
 
 export const closeLightbox = (lightbox: HTMLElement) => {
+  lightbox.classList.remove("sm:flex");
   document.removeEventListener("keyup", () => closeLightbox);
-  lightbox.classList.remove("flex");
 };
