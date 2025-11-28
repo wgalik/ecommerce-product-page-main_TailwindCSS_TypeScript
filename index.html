@@ -8,7 +8,7 @@
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/ecommerce-product-page-main_TailwindCSS_TypeScript/assets/favicon-32x32-DQjEQYWa.png"
+      href="/assets/favicon-32x32-DQjEQYWa.png"
     />
 
     <title>Frontend Mentor | E-commerce product page</title>
@@ -19,15 +19,19 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/ecommerce-product-page-main_TailwindCSS_TypeScript/assets/index-DYfeO56K.js"></script>
-    <link rel="stylesheet" crossorigin href="/ecommerce-product-page-main_TailwindCSS_TypeScript/assets/index-fLRjm9Xm.css">
+    <script type="module" crossorigin src="/assets/index-CzT_u0aI.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CGGDY25x.css">
   </head>
   <body class="flex h-dvh items-start justify-center">
     <header
-      class="fixed top-0 left-0 z-50 flex h-20 w-full items-center justify-center gap-4 bg-(--white) p-4 sm:h-28"
+      class="fixed top-0 left-0 z-50 flex h-20 w-full items-center justify-center gap-4 p-4 sm:h-28"
     >
+      <div
+        id="bg-dark"
+        class="absolute inset-0 z-60 hidden h-dvh w-dvw bg-black/75"
+      ></div>
       <nav>
-        <button id="hamburger-btn" class="relative z-99"></button>
+        <button id="hamburger-btn" class=""></button>
         <div id="logo"></div>
         <ul id="main-menu">
           <li><a href="#">Collections</a></li>
@@ -58,7 +62,7 @@
     >
       <section id="gallery">
         <div class="carousel">
-          <div class="carousel-item" id="carousel-main-image"></div>
+          <div class="carousel-item main-image" id="carousel-main-image"></div>
           <button
             class="carousel-btn carousel-btn-prev"
             value="prev"
@@ -89,7 +93,7 @@
             </svg>
           </button>
         </div>
-        <div class="thumbnails"></div>
+        <div class="gallery-thumbnails thumbnails"></div>
       </section>
       <section id="offer-card">
         <h2>Sneaker Company</h2>
@@ -171,29 +175,39 @@
             />
           </svg>
         </button>
-        <div class="lightbox-item" id="lightbox-main-image"><button class="lightbox-btn lightbox-btn-prev" value="prev" type="button">
-          <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11 1 3 9l8 8"
-              stroke="currentColor"
-              stroke-width="3"
-              fill="none"
-              fill-rule="evenodd"
-            />
-          </svg></button
-        ><button class="lightbox-btn lightbox-btn-next" value="next" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="m2 1 8 8-8 8"
-              stroke="currentColor"
-              stroke-width="3"
-              fill="none"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </button></div>
-        
-        <div class="lightbox-thumbnails"></div>
+        <div class="lightbox-item main-image" id="lightbox-main-image">
+          <button
+            class="lightbox-btn lightbox-btn-prev"
+            value="prev"
+            type="button"
+          >
+            <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11 1 3 9l8 8"
+                stroke="currentColor"
+                stroke-width="3"
+                fill="none"
+                fill-rule="evenodd"
+              />
+            </svg></button
+          ><button
+            class="lightbox-btn lightbox-btn-next"
+            value="next"
+            type="button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m2 1 8 8-8 8"
+                stroke="currentColor"
+                stroke-width="3"
+                fill="none"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="lightbox-thumbnails thumbnails"></div>
       </div>
     </div>
   </body>
