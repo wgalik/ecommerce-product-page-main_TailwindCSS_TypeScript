@@ -28,7 +28,7 @@
       @apply flex h-full w-full max-w-5xl items-center justify-start gap-4 sm:h-28 sm:gap-10 sm:border-b sm:border-(--grayishBlue);
 
       #hamburger-btn {
-        @apply z-50 h-4 w-4 cursor-pointer bg-[url("../images/icon-menu.svg")] bg-contain bg-center bg-no-repeat sm:hidden;
+        @apply relative z-110 h-4 w-4 cursor-pointer bg-[url("../images/icon-menu.svg")] bg-contain bg-center bg-no-repeat sm:hidden;
       }
 
       #logo {
@@ -36,7 +36,7 @@
       }
 
       #main-menu {
-        @apply absolute top-0 -left-70 z-50 flex h-dvh w-70 flex-col items-start justify-start gap-4 bg-(--white) p-4 pt-25 transition-all duration-500 ease-linear sm:static sm:h-full sm:w-auto sm:flex-row sm:items-center sm:gap-6 sm:p-0;
+        @apply absolute top-0 -left-70 z-100 flex h-dvh w-70 flex-col items-start justify-start gap-4 bg-(--white) p-4 pt-25 transition-all duration-500 ease-linear sm:static sm:h-full sm:w-auto sm:flex-row sm:items-center sm:gap-6 sm:p-0;
 
         li {
           @apply border-b-4 border-transparent pb-1 font-bold text-(--black) transition duration-300 ease-in-out hover:border-(--orange) sm:py-11 sm:text-sm sm:font-normal sm:text-(--darkGrayishBlue);
@@ -126,7 +126,7 @@
           }
         }
         #counter {
-          @apply text-base font-bold;
+          @apply w-4 text-center text-base font-bold;
         }
       }
       [type="submit"] {

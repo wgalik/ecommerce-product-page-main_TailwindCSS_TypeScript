@@ -36,16 +36,15 @@ const counterSpan = main.querySelector<HTMLSpanElement>("#counter")!;
 const submitBtn = main.querySelector<HTMLButtonElement>(
   "button[type='submit']",
 )!;
-const thumbnails = main.querySelector<HTMLElement>(".thumbnails")!;
+const galleryThumbnails = main.querySelector<HTMLElement>(
+  ".gallery-thumbnails",
+)!;
 const lightboxThumbnails = lightbox.querySelector<HTMLElement>(
   ".lightbox-thumbnails",
 )!;
 
 const lightboxCloseBtn = lightbox.querySelector<HTMLButtonElement>(
   "#lightbox-close-btn",
-)!;
-const lightboxItem = lightbox.querySelector<HTMLDivElement>(
-  "#lightbox-main-image",
 )!;
 
 const lightboxBtns =
@@ -55,34 +54,16 @@ cartBtn.addEventListener("click", () => openCart(aside));
 hamburgerBtn.addEventListener("click", () => openMenu(mainMenu, hamburgerBtn));
 carouselBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
-    slideImage(
-      event,
-      thumbnails,
-      lightboxThumbnails,
-      carouselItem,
-      lightboxItem,
-    ),
+    slideImage(event, galleryThumbnails, lightboxThumbnails),
   ),
 );
 lightboxBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
-    slideImage(
-      event,
-      thumbnails,
-      lightboxThumbnails,
-      carouselItem,
-      lightboxItem,
-    ),
+    slideImage(event, galleryThumbnails, lightboxThumbnails),
   ),
 );
 carouselItem.addEventListener("click", () =>
-  openLightbox(
-    thumbnails,
-    lightboxThumbnails,
-    carouselItem,
-    lightboxItem,
-    lightbox,
-  ),
+  openLightbox(galleryThumbnails, lightboxThumbnails, lightbox),
 );
 counterBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
@@ -90,31 +71,19 @@ counterBtns.forEach((button) =>
   ),
 );
 store.productThumbnails.forEach((item) => {
-  const thumbnail = document.createElement("div") as HTMLDivElement;
+  const galleryThumbnail = document.createElement("div") as HTMLDivElement;
   const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
-  thumbnails.appendChild(thumbnail);
+  galleryThumbnails.appendChild(galleryThumbnail);
   lightboxThumbnails.appendChild(lightboxThumbnail);
-  thumbnail.style.backgroundImage = `url("../images/${item}")`;
-  thumbnail.setAttribute("data-image", item);
+  galleryThumbnail.style.backgroundImage = `url("../images/${item}")`;
+  galleryThumbnail.setAttribute("data-image", item);
   lightboxThumbnail.style.backgroundImage = `url("../images/${item}")`;
   lightboxThumbnail.setAttribute("data-image", item);
-  thumbnail.addEventListener("click", (event) =>
-    showImageFromThumbnail(
-      event,
-      thumbnails,
-      lightboxThumbnails,
-      carouselItem,
-      lightboxItem,
-    ),
+  galleryThumbnail.addEventListener("click", (event) =>
+    showImageFromThumbnail(event, galleryThumbnails, lightboxThumbnails),
   );
   lightboxThumbnail.addEventListener("click", (event) =>
-    showImageFromThumbnail(
-      event,
-      thumbnails,
-      lightboxThumbnails,
-      carouselItem,
-      lightboxItem,
-    ),
+    showImageFromThumbnail(event, galleryThumbnails, lightboxThumbnails),
   );
 });
 submitBtn.addEventListener("click", () => addToCart(badgeSpan));
@@ -122,4 +91,4 @@ submitBtn.addEventListener("click", () => addToCart(badgeSpan));
 lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
 
 renderCounter(counterBtns[0], counterSpan);
-showImage(thumbnails, lightboxThumbnails, carouselItem, lightboxItem);
+showImage(galleryThumbnails, lightboxThumbnails);

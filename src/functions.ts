@@ -1,10 +1,12 @@
 import { store } from "./store";
 
 const addActiveClass = (
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
 ) => {
-  const activeThumbnail = thumbnails.children[store.index] as HTMLDivElement;
+  const activeThumbnail = galleryThumbnails.children[
+    store.index
+  ] as HTMLDivElement;
   activeThumbnail?.classList.add(...store.activeThumbnailClassList);
   activeThumbnail?.classList.add("active");
   const activeLightboxThumbnail = lightboxThumbnails.children[
@@ -21,10 +23,9 @@ export const addToCart = (badgeSpan: HTMLSpanElement) => {
   badgeSpan.innerHTML = String(store.counter);
 };
 export const openLightbox = (
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-  carouselItem: HTMLDivElement,
-  lightboxItem: HTMLDivElement,
+
   lightbox: HTMLElement,
 ) => {
   const windowInnerWidthPX = window.innerWidth;
@@ -38,7 +39,7 @@ export const openLightbox = (
   document.addEventListener("keyup", (event: KeyboardEvent) => {
     if (event.code === "Escape") closeLightbox(lightbox);
   });
-  showImage(thumbnails, lightboxThumbnails, carouselItem, lightboxItem);
+  showImage(galleryThumbnails, lightboxThumbnails);
 };
 export const compute = (
   event: MouseEvent,
@@ -59,29 +60,20 @@ export const openMenu = (
   mainMenu: HTMLUListElement,
   hamburgerBtn: HTMLButtonElement,
 ) => {
-  const div = document.createElement("div");
-  // div.style.backgroundColor = "rgba(0 0 0 9)";
-  div.style.height = "100dvh";
-  div.style.width = "100dvw";
-  div.classList.add(...["absolute", "inset-0", "z-40", "bg-black/75"]);
-  document.body.appendChild(div);
+  const bgDark = document.querySelector<HTMLDivElement>("#bg-dark")!;
 
   mainMenu.classList.toggle("left-0");
+  bgDark.classList.toggle("hidden");
   store.isMenuOpen = !store.isMenuOpen;
   if (store.isMenuOpen)
     return (hamburgerBtn.style.backgroundImage = `url("../images/icon-close.svg")`);
+
   hamburgerBtn.style.backgroundImage = `url("../images/icon-menu.svg")`;
 };
 
-// const openLightbox = () => {
-//   console.log("lIGHTBOX OPENED");
-// };
-
 const removeActiveClass = (
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-  carouselItem: HTMLDivElement,
-  lightboxItem: HTMLDivElement,
 ) => {
   const activeThumbnails =
     document.querySelectorAll<HTMLDivElement>(".active")!;
@@ -90,7 +82,7 @@ const removeActiveClass = (
     active.classList.remove("active");
   });
 
-  showImage(thumbnails, lightboxThumbnails, carouselItem, lightboxItem);
+  showImage(galleryThumbnails, lightboxThumbnails);
 };
 
 export const renderCounter = (
@@ -103,36 +95,34 @@ export const renderCounter = (
 };
 
 export const showImage = (
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-  carouselItem: HTMLDivElement,
-  lightboxItem: HTMLDivElement,
 ) => {
-  carouselItem.style.backgroundImage = `url("../images/${store.productImages[store.index]}")`;
-  lightboxItem.style.backgroundImage = `url("../images/${store.productImages[store.index]}")`;
-  addActiveClass(thumbnails, lightboxThumbnails);
+  const image = store.productImages[store.index];
+  const mainImage = document.querySelectorAll<HTMLDivElement>(".main-image");
+  if (!mainImage) return;
+  mainImage.forEach(
+    (div) => (div.style.backgroundImage = `url("./images/${image}")`),
+  );
+  addActiveClass(galleryThumbnails, lightboxThumbnails);
 };
 
 export const showImageFromThumbnail = (
   event: MouseEvent,
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-  carouselItem: HTMLDivElement,
-  lightboxItem: HTMLDivElement,
 ) => {
   const target = event.currentTarget as HTMLDivElement;
   if (!target.attributes[0].nodeValue) return;
   const imageNumber = Number(target.attributes[0].nodeValue.slice(14, 15));
   store.index = imageNumber - 1;
-  removeActiveClass(thumbnails, lightboxThumbnails, carouselItem, lightboxItem);
+  removeActiveClass(galleryThumbnails, lightboxThumbnails);
 };
 
 export const slideImage = (
   event: MouseEvent,
-  thumbnails: HTMLElement,
+  galleryThumbnails: HTMLElement,
   lightboxThumbnails: HTMLElement,
-  carouselItem: HTMLDivElement,
-  lightboxItem: HTMLDivElement,
 ) => {
   const target = event.currentTarget as HTMLButtonElement;
   console.log(target.value);
@@ -154,7 +144,7 @@ export const slideImage = (
       break;
   }
 
-  removeActiveClass(thumbnails, lightboxThumbnails, carouselItem, lightboxItem);
+  removeActiveClass(galleryThumbnails, lightboxThumbnails);
 };
 
 export const closeLightbox = (lightbox: HTMLElement) => {
