@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "vite": "^7.2.4"
@@ -16,5 +19,6 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "tailwindcss": "^4.1.17"
-  }
+  },
+  "homepage":"https://wgalik.github.io/ecommerce-product-page-main_TailwindCSS_TypeScript/"
 }
