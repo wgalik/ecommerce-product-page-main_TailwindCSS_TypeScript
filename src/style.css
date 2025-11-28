@@ -85,6 +85,9 @@
     }
     .thumbnails {
       @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
+      div {
+        @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
+      }
     }
   }
 
@@ -140,6 +143,45 @@
     }
     h3 {
       @apply self-end justify-self-center text-base font-bold text-(--darkGrayishBlue);
+    }
+  }
+
+  #lightbox {
+    @apply absolute inset-0 z-99 hidden items-center justify-center bg-(--black)/75;
+    .lightbox-container {
+      @apply grid w-9/10 max-w-120 gap-4;
+      #lightbox-close-btn {
+        @apply cursor-pointer justify-self-end fill-(--orange) transition duration-300 ease-in-out hover:fill-(--paleOrange);
+      }
+      .lightbox-item {
+        @apply relative aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:cursor-pointer sm:rounded-2xl;
+      }
+      .lightbox-btn {
+        @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90;
+        &.lightbox-btn-prev {
+          @apply -left-5.5;
+          svg {
+            @apply h-5 w-4;
+          }
+        }
+        &.lightbox-btn-next {
+          @apply -right-5.5;
+          svg {
+            @apply h-5 w-3;
+          }
+        }
+        &:active {
+          svg {
+            @apply scale-90;
+          }
+        }
+      }
+      .lightbox-thumbnails {
+        @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
+        div {
+          @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
+        }
+      }
     }
   }
 }
