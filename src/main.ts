@@ -90,7 +90,7 @@ lightboxBtns.forEach((button) =>
   button.addEventListener("click", (event) => handleButton(event, thumbnails)),
 );
 lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
-submitBtn.addEventListener("click", () => addToCart(badgeSpan,counterSpan));
+submitBtn.addEventListener("click", () => addToCart(badgeSpan, counterSpan));
 
 store.menu.forEach((menuItem) => {
   const li = document.createElement("li") as HTMLLIElement;
@@ -104,21 +104,16 @@ store.menu.forEach((menuItem) => {
   );
 });
 
-store.productThumbnails.forEach((item, index) => {
-  const galleryThumbnail = document.createElement("div") as HTMLDivElement;
-  const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
-  galleryThumbnails.appendChild(galleryThumbnail);
-  lightboxThumbnails.appendChild(lightboxThumbnail);
-  galleryThumbnail.style.backgroundImage = `url("${item}")`;
-  galleryThumbnail.setAttribute("data-key", `${index}`);
-  lightboxThumbnail.style.backgroundImage = `url("${item}")`;
-  lightboxThumbnail.setAttribute("data-key", `${index}`);
-  galleryThumbnail.addEventListener("click", (event) =>
-    handleThumbnail(event, thumbnails),
-  );
-  lightboxThumbnail.addEventListener("click", (event) =>
-    handleThumbnail(event, thumbnails),
-  );
+thumbnails.forEach((array) => {
+  store.productThumbnails.forEach((item, index) => {
+    const thumbnail = document.createElement("div") as HTMLDivElement;
+    array.appendChild(thumbnail);
+    thumbnail.style.backgroundImage = `url("${item}")`;
+    thumbnail.dataset.key = String(index);
+    thumbnail.addEventListener("click", (event) =>
+      handleThumbnail(event, thumbnails),
+    );
+  });
 });
 
 renderCounter(counterBtns[0], counterSpan);

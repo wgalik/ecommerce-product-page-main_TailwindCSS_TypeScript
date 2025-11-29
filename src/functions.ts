@@ -4,14 +4,11 @@ import closeMenuBtn from "./images/icon-close.svg";
 import openMenuBtn from "./images/icon-menu.svg";
 
 export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
-  const activeThumbnail = thumbnails[0].children[store.index] as HTMLDivElement;
-  activeThumbnail?.classList.add(...store.activeThumbnailClassList);
-  activeThumbnail?.classList.add("active");
-  const activeLightboxThumbnail = thumbnails[1].children[
-    store.index
-  ] as HTMLDivElement;
-  activeLightboxThumbnail?.classList.add(...store.activeThumbnailClassList);
-  activeLightboxThumbnail?.classList.add("active");
+  thumbnails.forEach((array) => {
+    const activeThumbnail = array.children[store.index] as HTMLDivElement;
+    activeThumbnail?.classList.add(...store.activeThumbnailClassList);
+    activeThumbnail?.classList.add("active");
+  });
 };
 
 export const addToCart = (
@@ -19,10 +16,10 @@ export const addToCart = (
   counterSpan: HTMLSpanElement,
 ) => {
   if (!store.counter) return (badgeSpan.style.display = "none");
-    badgeSpan.style.display = "inline";
+  badgeSpan.style.display = "inline";
   badgeSpan.innerHTML = String(store.counter);
-  store.counter = 0;
-  counterSpan.innerHTML = String(store.counter);
+  // store.counter = 0;
+  // counterSpan.innerHTML = String(store.counter);
 };
 
 export const closeCart = (aside: HTMLElement) => {
@@ -53,8 +50,8 @@ export const compute = (
   counterSpan: HTMLSpanElement,
 ) => {
   const target = event.currentTarget as HTMLButtonElement;
-  if (target.id === "subtraction") store.counter -= 1;
-  if (target.id === "addition") store.counter += 1;
+  if (target.id === "subtraction") store.counter--;
+  if (target.id === "addition") store.counter++;
   renderCounter(counterBtn, counterSpan);
 };
 
@@ -112,8 +109,8 @@ export const handleThumbnail = (
   thumbnails: Array<HTMLElement>,
 ) => {
   const target = event.currentTarget as HTMLDivElement;
-  if (!target.attributes[0].nodeValue) return;
-  store.index = Number(target.attributes[0].nodeValue);
+  if (!target.dataset.key) return;
+  store.index = Number(target.dataset.key);
   removeActiveClass();
   addActiveClass(thumbnails);
   showImage();
@@ -135,7 +132,7 @@ export const showImage = () => {
   mainImage.forEach((div) => (div.style.backgroundImage = `url("${image}")`));
 };
 
-const addition = () =>
+const subtraction = () =>
   !store.index ? (store.index = store.productImages.length - 1) : store.index--;
 
 const checkWindowWidth = () => {
@@ -179,10 +176,10 @@ const removeActiveClass = () => {
 const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
   switch (value) {
     case "prev":
-      addition();
+      subtraction();
       break;
     case "next":
-      subtraction();
+      addition();
       break;
   }
   removeActiveClass();
@@ -190,7 +187,7 @@ const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
   showImage();
 };
 
-const subtraction = () =>
+const addition = () =>
   store.index === store.productImages.length - 1
     ? (store.index = 0)
     : store.index++;
