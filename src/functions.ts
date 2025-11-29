@@ -190,3 +190,5 @@ const subtraction = () =>
   store.index === store.productImages.length - 1
     ? (store.index = 0)
     : store.index++;
+
+let zero;
