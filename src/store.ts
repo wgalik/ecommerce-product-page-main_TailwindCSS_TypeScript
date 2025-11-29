@@ -4,6 +4,7 @@ export const store = {
   index: 0,
   isCartOpen: false,
   isMenuOpen: false,
+  isLightboxOpen: false,
   smBreakpointRem: 40,
   smBreakpoint: window.matchMedia("(min-width: 40rem)"),
   lgBreakpointRem: 75,

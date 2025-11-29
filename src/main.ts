@@ -2,11 +2,13 @@ import "./style.css";
 import { store } from "./store";
 import {
   addToCart,
-  openLightbox,
+  handleLightbox,
+  // openLightbox,
   closeLightbox,
   compute,
   closeMenu,
-  openCart,
+  handleCart,
+  // openCart,
   handleMenu,
   renderCounter,
   showImage,
@@ -52,7 +54,7 @@ const lightboxCloseBtn = lightbox.querySelector<HTMLButtonElement>(
 const lightboxBtns =
   lightbox.querySelectorAll<HTMLButtonElement>(".lightbox-btn")!;
 // Events ///////////////////////////////////////////////////////
-cartBtn.addEventListener("click", () => openCart(aside, cartBtn));
+cartBtn.addEventListener("click", () => handleCart(aside, cartBtn));
 hamburgerBtn.addEventListener("click", () =>
   handleMenu(mainMenu, hamburgerBtn, bgDark),
 );
@@ -67,7 +69,7 @@ lightboxBtns.forEach((button) =>
   ),
 );
 carouselItem.addEventListener("click", () =>
-  openLightbox(galleryThumbnails, lightboxThumbnails, lightbox),
+  handleLightbox(galleryThumbnails, lightboxThumbnails, lightbox),
 );
 counterBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
@@ -88,7 +90,9 @@ store.menu.forEach((menuItem) => {
 });
 
 store.smBreakpoint.addEventListener("change", (event) => {
-  if (event.matches) closeMenu(mainMenu, hamburgerBtn, bgDark);
+  if (!event.matches) return;
+  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
+  if (store.isLightboxOpen) closeLightbox(lightbox);
 });
 store.productThumbnails.forEach((item) => {
   const galleryThumbnail = document.createElement("div") as HTMLDivElement;

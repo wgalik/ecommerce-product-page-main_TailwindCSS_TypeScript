@@ -1,0 +1,3 @@
+cart -> add responsivity for position
+
+remove window eventListener 'ESC'
