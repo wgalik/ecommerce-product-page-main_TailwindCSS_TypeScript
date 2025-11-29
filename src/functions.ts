@@ -58,31 +58,29 @@ const checkWindowWidth = () => {
 };
 
 export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
-  if (store.isCartOpen) return closeCart(aside, cartBtn);
+  if (store.isCartOpen) return closeCart(aside);
 
   checkWindowWidth();
   if (store.windowInnerWidthREM <= store.smBreakpointRem) {
     aside.style.left = "50%";
-    return openCart(aside, cartBtn);
   }
 
   const rect = cartBtn.getBoundingClientRect();
   if (store.windowInnerWidthREM > store.smBreakpointRem) {
     aside.style.left = `${rect.right - 360}px`;
-    return openCart(aside, cartBtn);
   }
   if (store.windowInnerWidthREM > store.lgBreakpointRem) {
     aside.style.left = `${rect.right - 180}px`;
-    return openCart(aside, cartBtn);
   }
+  openCart(aside);
 };
 
-const openCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+const openCart = (aside: HTMLElement) => {
   aside.classList.add("grid");
   store.isCartOpen = !store.isCartOpen;
 };
 
-export const closeCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+export const closeCart = (aside: HTMLElement) => {
   aside.classList.remove("grid");
   store.isCartOpen = false;
 };

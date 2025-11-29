@@ -5,7 +5,7 @@ export const store = {
   isMenuOpen: false,
   isLightboxOpen: false,
   smBreakpointRem: 40,
-  lgBreakpointRem: 75,
+  lgBreakpointRem: 80,
   windowInnerWidthREM: NaN,
 
   activeThumbnailClassList: [

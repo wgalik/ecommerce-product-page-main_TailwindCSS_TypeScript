@@ -114,13 +114,13 @@ lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
 document.addEventListener("keyup", (event: KeyboardEvent) => {
   if (event.code === "Escape") {
     if (store.isLightboxOpen) return closeLightbox(lightbox);
-    if (store.isCartOpen) return closeCart(aside, cartBtn);
+    if (store.isCartOpen) return closeCart(aside);
   }
 });
 
 window.addEventListener("resize", () => {
   if (store.isLightboxOpen) return closeLightbox(lightbox);
-  if (store.isCartOpen) return closeCart(aside, cartBtn);
+  if (store.isCartOpen) return closeCart(aside);
   if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
 });
 

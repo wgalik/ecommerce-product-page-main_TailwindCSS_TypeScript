@@ -153,7 +153,7 @@
         @apply cursor-pointer justify-self-end fill-(--orange) transition duration-300 ease-in-out hover:fill-(--paleOrange);
       }
       .lightbox-item {
-        @apply relative aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:cursor-pointer sm:rounded-2xl;
+        @apply relative aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear  sm:rounded-2xl;
       }
       .lightbox-btn {
         @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90;
