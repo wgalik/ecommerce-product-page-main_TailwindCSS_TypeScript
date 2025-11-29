@@ -5,6 +5,7 @@ import {
   handleLightbox,
   // openLightbox,
   closeLightbox,
+  closeCart,
   compute,
   closeMenu,
   handleCart,
@@ -89,11 +90,7 @@ store.menu.forEach((menuItem) => {
   );
 });
 
-store.smBreakpoint.addEventListener("change", (event) => {
-  if (!event.matches) return;
-  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
-  if (store.isLightboxOpen) closeLightbox(lightbox);
-});
+
 store.productThumbnails.forEach((item) => {
   const galleryThumbnail = document.createElement("div") as HTMLDivElement;
   const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
@@ -113,6 +110,19 @@ store.productThumbnails.forEach((item) => {
 submitBtn.addEventListener("click", () => addToCart(badgeSpan));
 
 lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
+
+document.addEventListener("keyup", (event: KeyboardEvent) => {
+  if (event.code === "Escape") {
+    if (store.isLightboxOpen) return closeLightbox(lightbox);
+    if (store.isCartOpen) return closeCart(aside, cartBtn);
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (store.isLightboxOpen) return closeLightbox(lightbox);
+  if (store.isCartOpen) return closeCart(aside, cartBtn);
+  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
+});
 
 renderCounter(counterBtns[0], counterSpan);
 showImage(galleryThumbnails, lightboxThumbnails);

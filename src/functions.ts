@@ -27,23 +27,14 @@ export const handleLightbox = (
   lightboxThumbnails: HTMLElement,
   lightbox: HTMLElement,
 ) => {
-  const windowInnerWidthPX = window.innerWidth;
-  const clientFontSize = parseFloat(
-    getComputedStyle(document.documentElement).fontSize,
-  );
-  const windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
-  if (windowInnerWidthREM < store.smBreakpointRem) return;
+  checkWindowWidth();
+  if (store.windowInnerWidthREM < store.smBreakpointRem) return;
   openLightbox(lightbox);
   showImage(galleryThumbnails, lightboxThumbnails);
 };
 
 const openLightbox = (lightbox: HTMLElement) => {
   lightbox.classList.add("sm:flex");
-  document.addEventListener("keyup", (event: KeyboardEvent) => {
-    console.log(125);
-
-    if (event.code === "Escape") closeLightbox(lightbox);
-  });
   store.isLightboxOpen = !store.isLightboxOpen;
 };
 
@@ -58,88 +49,42 @@ export const compute = (
   renderCounter(counterBtn, counterSpan);
 };
 
-export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
-  if (store.isCartOpen) return closeCart(aside, cartBtn);
-
+const checkWindowWidth = () => {
   const windowInnerWidthPX = window.innerWidth;
   const clientFontSize = parseFloat(
     getComputedStyle(document.documentElement).fontSize,
   );
-  const windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
-  const rect = cartBtn.getBoundingClientRect();
+  store.windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
+};
 
-  if (windowInnerWidthREM <= store.smBreakpointRem) {
+export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+  if (store.isCartOpen) return closeCart(aside, cartBtn);
+
+  checkWindowWidth();
+  if (store.windowInnerWidthREM <= store.smBreakpointRem) {
     aside.style.left = "50%";
     return openCart(aside, cartBtn);
   }
-  if (windowInnerWidthREM > store.smBreakpointRem) {
+
+  const rect = cartBtn.getBoundingClientRect();
+  if (store.windowInnerWidthREM > store.smBreakpointRem) {
     aside.style.left = `${rect.right - 360}px`;
     return openCart(aside, cartBtn);
   }
-  if (windowInnerWidthREM > store.lgBreakpointRem) {
+  if (store.windowInnerWidthREM > store.lgBreakpointRem) {
     aside.style.left = `${rect.right - 180}px`;
     return openCart(aside, cartBtn);
   }
-  openCart(aside, cartBtn);
-
-  // window.addEventListener("mousemove", () => handleCart(aside, cartBtn));
-  // window.addEventListener("resize", () => handleCart(aside, cartBtn));
-
-  // if (!store.isCartOpen) return;
 };
 
-// export const openCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
-//   window.addEventListener("mousemove", () => checkWindowWidth(aside, cartBtn));
-//   aside.classList.toggle("grid");
-//   window.addEventListener("resize", () => checkWindowWidth(aside, cartBtn));
-//   store.isCartOpen = !store.isCartOpen;
-//   if (!store.isCartOpen) return;
-//   document.addEventListener("keyup", (event: KeyboardEvent) => {
-//     if (event.code === "Escape" && aside.classList.contains("grid")) {
-//       aside.classList.remove("grid");
-//       store.isCartOpen = false;
-//       return;
-//     }
-//   });
-// };
-
-// const checkWindowWidth = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
-//   console.log(1125);
-
-//   const windowInnerWidthPX = window.innerWidth;
-//   const clientFontSize = parseFloat(
-//     getComputedStyle(document.documentElement).fontSize,
-//   );
-//   const windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
-//   const rect = cartBtn.getBoundingClientRect();
-//   if (windowInnerWidthREM > store.lgBreakpointRem) {
-//     console.log(rect);
-
-//     return (aside.style.left = `${rect.left - 360}px`);
-//   }
-//   if (windowInnerWidthREM > store.smBreakpointRem) {
-//     console.log(rect);
-
-//     return (aside.style.left = `${rect.left - 500}px`);
-//   }
-//   aside.style.left = "";
-// };
-
-///////////////////////////////////////////////////////////////////////
 const openCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
   aside.classList.add("grid");
-  document.addEventListener("keyup", (event: KeyboardEvent) => {
-    if (event.code === "Escape" && aside.classList.contains("grid")) {
-      closeCart(aside, cartBtn);
-    }
-  });
-  window.addEventListener("resize", () => handleCart(aside, cartBtn));
   store.isCartOpen = !store.isCartOpen;
 };
-const closeCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+
+export const closeCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
   aside.classList.remove("grid");
-  document.removeEventListener("keyup", () => {});
-  store.isCartOpen = !store.isCartOpen;
+  store.isCartOpen = false;
 };
 
 export const handleMenu = (
@@ -248,6 +193,6 @@ const subtraction = () =>
 
 export const closeLightbox = (lightbox: HTMLElement) => {
   lightbox.classList.remove("sm:flex");
-  document.removeEventListener("keyup", () => closeLightbox);
+
   store.isLightboxOpen = false;
 };

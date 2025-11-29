@@ -136,8 +136,7 @@
   }
 
   #cart {
-    @apply absolute top-22  z-50 hidden h-70 w-95/100 max-w-90 -translate-x-1/2  sm:translate-x-0 grid-rows-4 rounded-lg bg-(--white) shadow-2xl/50;
-    /* transition-all duration-3000 ease-in-out */
+    @apply absolute top-22 z-50 hidden h-70 w-95/100 max-w-90 -translate-x-1/2 grid-rows-4 rounded-lg bg-(--white) shadow-2xl/50 sm:translate-x-0;
     h2 {
       @apply border-b border-(--grayishBlue) p-4 text-base font-bold;
     }

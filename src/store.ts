@@ -1,14 +1,12 @@
 export const store = {
-  // const lgBreakpoint = window.matchMedia("(min-width: 64rem)");
   counter: 0,
   index: 0,
   isCartOpen: false,
   isMenuOpen: false,
   isLightboxOpen: false,
   smBreakpointRem: 40,
-  smBreakpoint: window.matchMedia("(min-width: 40rem)"),
   lgBreakpointRem: 75,
-  lgBreakpoint: window.matchMedia("(min-width: 64rem)"),
+  windowInnerWidthREM: NaN,
 
   activeThumbnailClassList: [
     "outline-2",
