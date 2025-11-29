@@ -14,10 +14,15 @@ export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
   activeLightboxThumbnail?.classList.add("active");
 };
 
-export const addToCart = (badgeSpan: HTMLSpanElement) => {
+export const addToCart = (
+  badgeSpan: HTMLSpanElement,
+  counterSpan: HTMLSpanElement,
+) => {
   if (!store.counter) return (badgeSpan.style.display = "none");
-  badgeSpan.style.display = "inline";
+    badgeSpan.style.display = "inline";
   badgeSpan.innerHTML = String(store.counter);
+  store.counter = 0;
+  counterSpan.innerHTML = String(store.counter);
 };
 
 export const closeCart = (aside: HTMLElement) => {
