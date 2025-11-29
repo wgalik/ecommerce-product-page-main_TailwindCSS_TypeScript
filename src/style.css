@@ -178,7 +178,7 @@
       .lightbox-thumbnails {
         @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
         div {
-          @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
+          @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-25;
         }
       }
     }

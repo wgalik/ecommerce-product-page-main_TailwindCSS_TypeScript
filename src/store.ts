@@ -1,5 +1,5 @@
 import image_1 from "./images/image-product-1.jpg";
-// console.log(imageProduct_1.slice(12));
+console.log(image_1.slice(12));
 
 const imageProduct_1 = image_1.slice(12);
 console.log(imageProduct_1);
