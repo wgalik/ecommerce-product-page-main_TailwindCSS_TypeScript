@@ -191,4 +191,4 @@ const subtraction = () =>
     ? (store.index = 0)
     : store.index++;
 
-let zero;
+

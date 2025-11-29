@@ -125,4 +125,4 @@ renderCounter(counterBtns[0], counterSpan);
 showImage();
 addActiveClass(thumbnails);
 
-let zero;
+
