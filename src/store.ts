@@ -1,3 +1,9 @@
+import image_1 from "./images/image-product-1.jpg";
+// console.log(imageProduct_1.slice(12));
+
+const imageProduct_1 = image_1.slice(12);
+console.log(imageProduct_1);
+
 export const store = {
   counter: 0,
   index: 0,
@@ -20,7 +26,7 @@ export const store = {
 
   menu: ["Collections", "Men", "Women", "About", "Contact"],
   productImages: [
-    "image-product-1.jpg",
+    imageProduct_1,
     "image-product-2.jpg",
     "image-product-3.jpg",
     "image-product-4.jpg",
