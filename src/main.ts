@@ -1,20 +1,20 @@
 import "./style.css";
 import { store } from "./store";
 import {
+  addActiveClass,
   addToCart,
-  handleLightbox,
-  // openLightbox,
-  closeLightbox,
   closeCart,
-  compute,
   closeMenu,
+  closeLightbox,
+  compute,
+  handleArrow,
+  handleButton,
   handleCart,
-  // openCart,
   handleMenu,
+  handleLightbox,
+  handleThumbnail,
   renderCounter,
   showImage,
-  showImageFromThumbnail,
-  slideImage,
 } from "./functions";
 
 //  DOM Elements /////////////////////////////////////////////////
@@ -26,10 +26,10 @@ const lightbox = document.querySelector<HTMLDivElement>("#lightbox");
 if (!header || !main || !aside || !lightbox)
   throw new Error("Missing required elements.");
 
-const bgDark = header.querySelector<HTMLDivElement>("#bg-dark")!;
-const hamburgerBtn = header.querySelector<HTMLButtonElement>("#hamburger-btn")!;
 const badgeSpan = header.querySelector<HTMLSpanElement>("#badge")!;
+const bgDark = header.querySelector<HTMLDivElement>("#bg-dark")!;
 const cartBtn = header.querySelector<HTMLButtonElement>("#cart-btn")!;
+const hamburgerBtn = header.querySelector<HTMLButtonElement>("#hamburger-btn")!;
 const mainMenu = header.querySelector<HTMLUListElement>("#main-menu")!;
 
 const carouselBtns = main.querySelectorAll<HTMLButtonElement>(".carousel-btn")!;
@@ -38,45 +38,59 @@ const carouselItem = main.querySelector<HTMLDivElement>(
 )!;
 const counterBtns = main.querySelectorAll<HTMLButtonElement>(".counter-btn")!;
 const counterSpan = main.querySelector<HTMLSpanElement>("#counter")!;
+const galleryThumbnails = main.querySelector<HTMLElement>(
+  ".gallery-thumbnails",
+)!;
 const submitBtn = main.querySelector<HTMLButtonElement>(
   "button[type='submit']",
 )!;
-const galleryThumbnails = main.querySelector<HTMLElement>(
-  ".gallery-thumbnails",
+
+const lightboxBtns =
+  lightbox.querySelectorAll<HTMLButtonElement>(".lightbox-btn")!;
+const lightboxCloseBtn = lightbox.querySelector<HTMLButtonElement>(
+  "#lightbox-close-btn",
 )!;
 const lightboxThumbnails = lightbox.querySelector<HTMLElement>(
   ".lightbox-thumbnails",
 )!;
 
-const lightboxCloseBtn = lightbox.querySelector<HTMLButtonElement>(
-  "#lightbox-close-btn",
-)!;
+const thumbnails = [galleryThumbnails, lightboxThumbnails];
 
-const lightboxBtns =
-  lightbox.querySelectorAll<HTMLButtonElement>(".lightbox-btn")!;
 // Events ///////////////////////////////////////////////////////
-cartBtn.addEventListener("click", () => handleCart(aside, cartBtn));
-hamburgerBtn.addEventListener("click", () =>
-  handleMenu(mainMenu, hamburgerBtn, bgDark),
-);
+
+window.addEventListener("resize", () => {
+  if (store.isLightboxOpen) return closeLightbox(lightbox);
+  if (store.isCartOpen) return closeCart(aside);
+  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
+});
+
+document.addEventListener("keyup", (event: KeyboardEvent) => {
+  if (event.code === "ArrowLeft" || event.code === "ArrowRight")
+    return handleArrow(event, thumbnails);
+  if (event.code === "Escape") {
+    if (store.isLightboxOpen) return closeLightbox(lightbox);
+    if (store.isCartOpen) return closeCart(aside);
+  }
+});
+
 carouselBtns.forEach((button) =>
-  button.addEventListener("click", (event) =>
-    slideImage(event, galleryThumbnails, lightboxThumbnails),
-  ),
+  button.addEventListener("click", (event) => handleButton(event, thumbnails)),
 );
-lightboxBtns.forEach((button) =>
-  button.addEventListener("click", (event) =>
-    slideImage(event, galleryThumbnails, lightboxThumbnails),
-  ),
-);
-carouselItem.addEventListener("click", () =>
-  handleLightbox(galleryThumbnails, lightboxThumbnails, lightbox),
-);
+carouselItem.addEventListener("click", () => handleLightbox(lightbox));
+cartBtn.addEventListener("click", () => handleCart(aside, cartBtn));
 counterBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
     compute(event, counterBtns[0], counterSpan),
   ),
 );
+hamburgerBtn.addEventListener("click", () =>
+  handleMenu(mainMenu, hamburgerBtn, bgDark),
+);
+lightboxBtns.forEach((button) =>
+  button.addEventListener("click", (event) => handleButton(event, thumbnails)),
+);
+lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
+submitBtn.addEventListener("click", () => addToCart(badgeSpan));
 
 store.menu.forEach((menuItem) => {
   const li = document.createElement("li") as HTMLLIElement;
@@ -90,7 +104,6 @@ store.menu.forEach((menuItem) => {
   );
 });
 
-
 store.productThumbnails.forEach((item) => {
   const galleryThumbnail = document.createElement("div") as HTMLDivElement;
   const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
@@ -101,28 +114,13 @@ store.productThumbnails.forEach((item) => {
   lightboxThumbnail.style.backgroundImage = `url("../images/${item}")`;
   lightboxThumbnail.setAttribute("data-image", item);
   galleryThumbnail.addEventListener("click", (event) =>
-    showImageFromThumbnail(event, galleryThumbnails, lightboxThumbnails),
+    handleThumbnail(event, thumbnails),
   );
   lightboxThumbnail.addEventListener("click", (event) =>
-    showImageFromThumbnail(event, galleryThumbnails, lightboxThumbnails),
+    handleThumbnail(event, thumbnails),
   );
-});
-submitBtn.addEventListener("click", () => addToCart(badgeSpan));
-
-lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
-
-document.addEventListener("keyup", (event: KeyboardEvent) => {
-  if (event.code === "Escape") {
-    if (store.isLightboxOpen) return closeLightbox(lightbox);
-    if (store.isCartOpen) return closeCart(aside);
-  }
-});
-
-window.addEventListener("resize", () => {
-  if (store.isLightboxOpen) return closeLightbox(lightbox);
-  if (store.isCartOpen) return closeCart(aside);
-  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
 });
 
 renderCounter(counterBtns[0], counterSpan);
-showImage(galleryThumbnails, lightboxThumbnails);
+showImage();
+addActiveClass(thumbnails);

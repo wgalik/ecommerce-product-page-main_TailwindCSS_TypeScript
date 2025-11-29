@@ -1,19 +1,12 @@
 import { store } from "./store";
 
-const addActiveClass = (
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
-) => {
-  const activeThumbnail = galleryThumbnails.children[
-    store.index
-  ] as HTMLDivElement;
+export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
+  const activeThumbnail = thumbnails[0].children[store.index] as HTMLDivElement;
   activeThumbnail?.classList.add(...store.activeThumbnailClassList);
   activeThumbnail?.classList.add("active");
-  const activeLightboxThumbnail = lightboxThumbnails.children[
+  const activeLightboxThumbnail = thumbnails[1].children[
     store.index
   ] as HTMLDivElement;
-  console.log(activeLightboxThumbnail);
-
   activeLightboxThumbnail?.classList.add(...store.activeThumbnailClassList);
   activeLightboxThumbnail?.classList.add("active");
 };
@@ -22,15 +15,10 @@ export const addToCart = (badgeSpan: HTMLSpanElement) => {
   badgeSpan.style.display = "inline";
   badgeSpan.innerHTML = String(store.counter);
 };
-export const handleLightbox = (
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
-  lightbox: HTMLElement,
-) => {
+export const handleLightbox = (lightbox: HTMLElement) => {
   checkWindowWidth();
   if (store.windowInnerWidthREM < store.smBreakpointRem) return;
   openLightbox(lightbox);
-  showImage(galleryThumbnails, lightboxThumbnails);
 };
 
 const openLightbox = (lightbox: HTMLElement) => {
@@ -64,7 +52,6 @@ export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
   if (store.windowInnerWidthREM <= store.smBreakpointRem) {
     aside.style.left = "50%";
   }
-
   const rect = cartBtn.getBoundingClientRect();
   if (store.windowInnerWidthREM > store.smBreakpointRem) {
     aside.style.left = `${rect.right - 360}px`;
@@ -116,18 +103,13 @@ export const closeMenu = (
   store.isMenuOpen = false;
 };
 
-const removeActiveClass = (
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
-) => {
+const removeActiveClass = () => {
   const activeThumbnails =
     document.querySelectorAll<HTMLDivElement>(".active")!;
   activeThumbnails.forEach((active) => {
     active.classList.remove(...store.activeThumbnailClassList);
     active.classList.remove("active");
   });
-
-  showImage(galleryThumbnails, lightboxThumbnails);
 };
 
 export const renderCounter = (
@@ -139,39 +121,48 @@ export const renderCounter = (
   counterSpan.innerHTML = String(store.counter);
 };
 
-export const showImage = (
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
-) => {
+export const showImage = () => {
   const image = store.productImages[store.index];
   const mainImage = document.querySelectorAll<HTMLDivElement>(".main-image");
   if (!mainImage) return;
   mainImage.forEach(
     (div) => (div.style.backgroundImage = `url("./images/${image}")`),
   );
-  addActiveClass(galleryThumbnails, lightboxThumbnails);
 };
 
-export const showImageFromThumbnail = (
+export const handleThumbnail = (
   event: MouseEvent,
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
+  thumbnails: Array<HTMLElement>,
 ) => {
+  console.log(thumbnails);
   const target = event.currentTarget as HTMLDivElement;
   if (!target.attributes[0].nodeValue) return;
   const imageNumber = Number(target.attributes[0].nodeValue.slice(14, 15));
   store.index = imageNumber - 1;
-  removeActiveClass(galleryThumbnails, lightboxThumbnails);
+  removeActiveClass();
+  addActiveClass(thumbnails);
+  showImage();
 };
 
-export const slideImage = (
+export const handleArrow = (
+  event: KeyboardEvent,
+  thumbnails: Array<HTMLElement>,
+) => {
+  const value = event.code === "ArrowLeft" ? "prev" : "next";
+  slideImage(value, thumbnails);
+};
+
+export const handleButton = (
   event: MouseEvent,
-  galleryThumbnails: HTMLElement,
-  lightboxThumbnails: HTMLElement,
+  thumbnails: Array<HTMLElement>,
 ) => {
   const target = event.currentTarget as HTMLButtonElement;
+  const value = target.value;
+  slideImage(value, thumbnails);
+};
 
-  switch (target.value) {
+const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
+  switch (value) {
     case "prev":
       addition();
       break;
@@ -179,7 +170,9 @@ export const slideImage = (
       subtraction();
       break;
   }
-  removeActiveClass(galleryThumbnails, lightboxThumbnails);
+  removeActiveClass();
+  addActiveClass(thumbnails);
+  showImage();
 };
 
 const addition = () =>
