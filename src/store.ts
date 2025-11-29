@@ -1,8 +1,11 @@
 import image_1 from "./images/image-product-1.jpg";
-console.log(image_1.slice(12));
-
-const imageProduct_1 = image_1.slice(12);
-console.log(imageProduct_1);
+import image_2 from "./images/image-product-2.jpg";
+import image_3 from "./images/image-product-3.jpg";
+import image_4 from "./images/image-product-4.jpg";
+import thumbnail_1 from "./images/image-product-1-thumbnail.jpg";
+import thumbnail_2 from "./images/image-product-2-thumbnail.jpg";
+import thumbnail_3 from "./images/image-product-3-thumbnail.jpg";
+import thumbnail_4 from "./images/image-product-4-thumbnail.jpg";
 
 export const store = {
   counter: 0,
@@ -25,17 +28,8 @@ export const store = {
   ],
 
   menu: ["Collections", "Men", "Women", "About", "Contact"],
-  productImages: [
-    imageProduct_1,
-    "image-product-2.jpg",
-    "image-product-3.jpg",
-    "image-product-4.jpg",
-  ],
 
-  productThumbnails: [
-    "image-product-1-thumbnail.jpg",
-    "image-product-2-thumbnail.jpg",
-    "image-product-3-thumbnail.jpg",
-    "image-product-4-thumbnail.jpg",
-  ],
+  productImages: [image_1, image_2, image_3, image_4],
+
+  productThumbnails: [thumbnail_1, thumbnail_2, thumbnail_3, thumbnail_4],
 };

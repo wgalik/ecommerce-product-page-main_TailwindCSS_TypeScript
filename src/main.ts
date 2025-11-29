@@ -104,15 +104,15 @@ store.menu.forEach((menuItem) => {
   );
 });
 
-store.productThumbnails.forEach((item) => {
+store.productThumbnails.forEach((item, index) => {
   const galleryThumbnail = document.createElement("div") as HTMLDivElement;
   const lightboxThumbnail = document.createElement("div") as HTMLDivElement;
   galleryThumbnails.appendChild(galleryThumbnail);
   lightboxThumbnails.appendChild(lightboxThumbnail);
-  galleryThumbnail.style.backgroundImage = `url("../images/${item}")`;
-  galleryThumbnail.setAttribute("data-image", item);
-  lightboxThumbnail.style.backgroundImage = `url("../images/${item}")`;
-  lightboxThumbnail.setAttribute("data-image", item);
+  galleryThumbnail.style.backgroundImage = `url("${item}")`;
+  galleryThumbnail.setAttribute("data-key", `${index}`);
+  lightboxThumbnail.style.backgroundImage = `url("${item}")`;
+  lightboxThumbnail.setAttribute("data-key", `${index}`);
   galleryThumbnail.addEventListener("click", (event) =>
     handleThumbnail(event, thumbnails),
   );
@@ -124,5 +124,3 @@ store.productThumbnails.forEach((item) => {
 renderCounter(counterBtns[0], counterSpan);
 showImage();
 addActiveClass(thumbnails);
-
-

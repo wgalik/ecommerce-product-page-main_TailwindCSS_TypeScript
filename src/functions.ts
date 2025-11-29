@@ -1,5 +1,8 @@
 import { store } from "./store";
 
+import closeMenuBtn from "./images/icon-close.svg";
+import openMenuBtn from "./images/icon-menu.svg";
+
 export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
   const activeThumbnail = thumbnails[0].children[store.index] as HTMLDivElement;
   activeThumbnail?.classList.add(...store.activeThumbnailClassList);
@@ -29,7 +32,7 @@ export const closeMenu = (
 ) => {
   mainMenu.classList.remove("left-0");
   bgDark.classList.add("hidden");
-  hamburgerBtn.style.backgroundImage = `url("../images/icon-menu.svg")`;
+  hamburgerBtn.style.backgroundImage = `url("${openMenuBtn}")`;
   store.isMenuOpen = false;
 };
 
@@ -103,11 +106,9 @@ export const handleThumbnail = (
   event: MouseEvent,
   thumbnails: Array<HTMLElement>,
 ) => {
-  console.log(thumbnails);
   const target = event.currentTarget as HTMLDivElement;
   if (!target.attributes[0].nodeValue) return;
-  const imageNumber = Number(target.attributes[0].nodeValue.slice(14, 15));
-  store.index = imageNumber - 1;
+  store.index = Number(target.attributes[0].nodeValue);
   removeActiveClass();
   addActiveClass(thumbnails);
   showImage();
@@ -126,9 +127,7 @@ export const showImage = () => {
   const image = store.productImages[store.index];
   const mainImage = document.querySelectorAll<HTMLDivElement>(".main-image");
   if (!mainImage) return;
-  mainImage.forEach(
-    (div) => (div.style.backgroundImage = `url("./images/${image}")`),
-  );
+  mainImage.forEach((div) => (div.style.backgroundImage = `url("${image}")`));
 };
 
 const addition = () =>
@@ -154,7 +153,7 @@ const openMenu = (
 ) => {
   mainMenu.classList.add("left-0");
   bgDark.classList.remove("hidden");
-  hamburgerBtn.style.backgroundImage = `url("../images/icon-close.svg")`;
+  hamburgerBtn.style.backgroundImage = `url("${closeMenuBtn}")`;
   store.isMenuOpen = !store.isMenuOpen;
 };
 
@@ -190,5 +189,3 @@ const subtraction = () =>
   store.index === store.productImages.length - 1
     ? (store.index = 0)
     : store.index++;
-
-
