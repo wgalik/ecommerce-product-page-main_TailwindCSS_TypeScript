@@ -62,8 +62,6 @@ const thumbnails = [galleryThumbnails, lightboxThumbnails];
 // Events ///////////////////////////////////////////////////////
 
 window.addEventListener("resize", () => {
-  console.log(state.isLightboxOpen);
-
   if (state.isLightboxOpen) return closeLightbox(lightbox);
   if (state.isCartOpen) return closeCart(aside);
   if (state.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
