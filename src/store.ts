@@ -8,6 +8,7 @@ import thumbnail_3 from "./images/image-product-3-thumbnail.jpg";
 import thumbnail_4 from "./images/image-product-4-thumbnail.jpg";
 
 export const store = {
+  cart: 0,
   counter: 0,
   index: 0,
   isCartOpen: false,

@@ -14,12 +14,14 @@ export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
 export const addToCart = (
   badgeSpan: HTMLSpanElement,
   counterSpan: HTMLSpanElement,
+  counterBtn: HTMLButtonElement,
 ) => {
-  if (!store.counter) return (badgeSpan.style.display = "none");
+  store.cart += store.counter;
+  if (!store.cart) return (badgeSpan.style.display = "none");
   badgeSpan.style.display = "inline";
-  badgeSpan.innerHTML = String(store.counter);
-  // store.counter = 0;
-  // counterSpan.innerHTML = String(store.counter);
+  badgeSpan.innerHTML = String(store.cart);
+  store.counter = 0;
+  renderCounter(counterBtn, counterSpan);
 };
 
 export const closeCart = (aside: HTMLElement) => {

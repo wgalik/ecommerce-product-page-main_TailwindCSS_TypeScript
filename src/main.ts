@@ -90,7 +90,9 @@ lightboxBtns.forEach((button) =>
   button.addEventListener("click", (event) => handleButton(event, thumbnails)),
 );
 lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
-submitBtn.addEventListener("click", () => addToCart(badgeSpan, counterSpan));
+submitBtn.addEventListener("click", () =>
+  addToCart(badgeSpan, counterSpan, counterBtns[0]),
+);
 
 store.menu.forEach((menuItem) => {
   const li = document.createElement("li") as HTMLLIElement;
