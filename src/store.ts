@@ -8,29 +8,45 @@ import thumbnail_3 from "./images/image-product-3-thumbnail.jpg";
 import thumbnail_4 from "./images/image-product-4-thumbnail.jpg";
 
 export const store = {
-  cart: 0,
-  counter: 0,
-  index: 0,
-  isCartOpen: false,
-  isMenuOpen: false,
-  isLightboxOpen: false,
-  smBreakpointRem: 40,
-  lgBreakpointRem: 80,
-  windowInnerWidthREM: NaN,
+  state: {
+    cart: 0,
+    counter: 0,
+    index: 0,
+    isCartOpen: false,
+    isMenuOpen: false,
+    isLightboxOpen: false,
+    windowInnerWidthREM: NaN,
+  },
+  data: {
+    activeThumbnailClassList: [
+      "outline-2",
+      "outline-current",
+      "before:absolute",
+      "before:bg-(--white)/50",
+      "before:inset-0",
+      "before:rounded-lg",
+      "hover:opacity-100",
+    ],
 
-  activeThumbnailClassList: [
-    "outline-2",
-    "outline-current",
-    "before:absolute",
-    "before:bg-(--white)/50",
-    "before:inset-0",
-    "before:rounded-lg",
-    "hover:opacity-100",
-  ],
+    breakpoints: {
+      sm: 40,
+      lg: 80,
+    },
+    menuItems: ["Collections", "Men", "Women", "About", "Contact"],
 
-  menu: ["Collections", "Men", "Women", "About", "Contact"],
+    productImages: [image_1, image_2, image_3, image_4],
 
-  productImages: [image_1, image_2, image_3, image_4],
+    productThumbnails: [thumbnail_1, thumbnail_2, thumbnail_3, thumbnail_4],
+  },
 
-  productThumbnails: [thumbnail_1, thumbnail_2, thumbnail_3, thumbnail_4],
+  // methods: {
+  //   setCart: (value: number) => (store.state.cart += value),
+  //   setCounter: (value: number) => (store.state.counter += value),
+  //   setIndex: (value: number) => (store.state.index += value),
+  //   setIsCartOpen: (value: boolean) => (store.state.isCartOpen = value),
+  //   setIsMenuOpen: (value: boolean) => (store.state.isMenuOpen = value),
+  //   setIsLightboxOpen: (value: boolean) => (store.state.isLightboxOpen = value),
+  //   setWindowInnerWidthREM: (value: number) =>
+  //     (store.state.windowInnerWidthREM = value),
+  // },
 };

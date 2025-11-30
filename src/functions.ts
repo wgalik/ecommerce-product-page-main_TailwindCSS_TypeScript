@@ -3,10 +3,14 @@ import { store } from "./store";
 import closeMenuBtn from "./images/icon-close.svg";
 import openMenuBtn from "./images/icon-menu.svg";
 
+const { activeThumbnailClassList, breakpoints, productImages } = store.data;
+
+const { state } = store;
+
 export const addActiveClass = (thumbnails: Array<HTMLElement>) => {
   thumbnails.forEach((array) => {
-    const activeThumbnail = array.children[store.index] as HTMLDivElement;
-    activeThumbnail?.classList.add(...store.activeThumbnailClassList);
+    const activeThumbnail = array.children[state.index] as HTMLDivElement;
+    activeThumbnail?.classList.add(...activeThumbnailClassList);
     activeThumbnail?.classList.add("active");
   });
 };
@@ -16,17 +20,17 @@ export const addToCart = (
   counterSpan: HTMLSpanElement,
   counterBtn: HTMLButtonElement,
 ) => {
-  store.cart += store.counter;
-  if (!store.cart) return (badgeSpan.style.display = "none");
+  state.cart += state.counter;
+  if (!state.cart) return (badgeSpan.style.display = "none");
   badgeSpan.style.display = "inline";
-  badgeSpan.innerHTML = String(store.cart);
-  store.counter = 0;
+  badgeSpan.innerHTML = String(state.cart);
+  state.counter = 0;
   renderCounter(counterBtn, counterSpan);
 };
 
 export const closeCart = (aside: HTMLElement) => {
   aside.classList.remove("grid");
-  store.isCartOpen = false;
+  state.isCartOpen = false;
 };
 
 export const closeMenu = (
@@ -37,13 +41,13 @@ export const closeMenu = (
   mainMenu.classList.remove("left-0");
   bgDark.classList.add("hidden");
   hamburgerBtn.style.backgroundImage = `url("${openMenuBtn}")`;
-  store.isMenuOpen = false;
+  state.isMenuOpen = false;
 };
 
 export const closeLightbox = (lightbox: HTMLElement) => {
   lightbox.classList.remove("sm:flex");
 
-  store.isLightboxOpen = false;
+  state.isLightboxOpen = false;
 };
 
 export const compute = (
@@ -52,8 +56,8 @@ export const compute = (
   counterSpan: HTMLSpanElement,
 ) => {
   const target = event.currentTarget as HTMLButtonElement;
-  if (target.id === "subtraction") store.counter--;
-  if (target.id === "addition") store.counter++;
+  if (target.id === "subtraction") state.counter--;
+  if (target.id === "addition") state.counter++;
   renderCounter(counterBtn, counterSpan);
 };
 
@@ -75,17 +79,17 @@ export const handleButton = (
 };
 
 export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
-  if (store.isCartOpen) return closeCart(aside);
+  if (state.isCartOpen) return closeCart(aside);
 
   checkWindowWidth();
-  if (store.windowInnerWidthREM <= store.smBreakpointRem) {
+  if (state.windowInnerWidthREM <= breakpoints.sm) {
     aside.style.left = "50%";
   }
   const rect = cartBtn.getBoundingClientRect();
-  if (store.windowInnerWidthREM > store.smBreakpointRem) {
+  if (state.windowInnerWidthREM > breakpoints.sm) {
     aside.style.left = `${rect.right - 360}px`;
   }
-  if (store.windowInnerWidthREM > store.lgBreakpointRem) {
+  if (state.windowInnerWidthREM > breakpoints.lg) {
     aside.style.left = `${rect.right - 180}px`;
   }
   openCart(aside);
@@ -96,13 +100,13 @@ export const handleMenu = (
   hamburgerBtn: HTMLButtonElement,
   bgDark: HTMLDivElement,
 ) => {
-  if (store.isMenuOpen) return closeMenu(mainMenu, hamburgerBtn, bgDark);
+  if (state.isMenuOpen) return closeMenu(mainMenu, hamburgerBtn, bgDark);
   openMenu(mainMenu, hamburgerBtn, bgDark);
 };
 
 export const handleLightbox = (lightbox: HTMLElement) => {
   checkWindowWidth();
-  if (store.windowInnerWidthREM < store.smBreakpointRem) return;
+  if (state.windowInnerWidthREM < breakpoints.sm) return;
   openLightbox(lightbox);
 };
 
@@ -112,7 +116,7 @@ export const handleThumbnail = (
 ) => {
   const target = event.currentTarget as HTMLDivElement;
   if (!target.dataset.key) return;
-  store.index = Number(target.dataset.key);
+  state.index = Number(target.dataset.key);
   removeActiveClass();
   addActiveClass(thumbnails);
   showImage();
@@ -123,31 +127,31 @@ export const renderCounter = (
   counterSpan: HTMLSpanElement,
 ) => {
   counterBtn.removeAttribute("disabled");
-  if (!store.counter) counterBtn.setAttribute("disabled", "true");
-  counterSpan.innerHTML = String(store.counter);
+  if (!state.counter) counterBtn.setAttribute("disabled", "true");
+  counterSpan.innerHTML = String(state.counter);
 };
 
 export const showImage = () => {
-  const image = store.productImages[store.index];
+  const image = productImages[state.index];
   const mainImage = document.querySelectorAll<HTMLDivElement>(".main-image");
   if (!mainImage) return;
   mainImage.forEach((div) => (div.style.backgroundImage = `url("${image}")`));
 };
 
 const subtraction = () =>
-  !store.index ? (store.index = store.productImages.length - 1) : store.index--;
+  !state.index ? (state.index = productImages.length - 1) : state.index--;
 
 const checkWindowWidth = () => {
   const windowInnerWidthPX = window.innerWidth;
   const clientFontSize = parseFloat(
     getComputedStyle(document.documentElement).fontSize,
   );
-  store.windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
+  state.windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
 };
 
 const openCart = (aside: HTMLElement) => {
   aside.classList.add("grid");
-  store.isCartOpen = !store.isCartOpen;
+  state.isCartOpen = !state.isCartOpen;
 };
 
 const openMenu = (
@@ -158,19 +162,19 @@ const openMenu = (
   mainMenu.classList.add("left-0");
   bgDark.classList.remove("hidden");
   hamburgerBtn.style.backgroundImage = `url("${closeMenuBtn}")`;
-  store.isMenuOpen = !store.isMenuOpen;
+  state.isMenuOpen = !state.isMenuOpen;
 };
 
 const openLightbox = (lightbox: HTMLElement) => {
   lightbox.classList.add("sm:flex");
-  store.isLightboxOpen = !store.isLightboxOpen;
+  state.isLightboxOpen = !state.isLightboxOpen;
 };
 
 const removeActiveClass = () => {
   const activeThumbnails =
     document.querySelectorAll<HTMLDivElement>(".active")!;
   activeThumbnails.forEach((active) => {
-    active.classList.remove(...store.activeThumbnailClassList);
+    active.classList.remove(...activeThumbnailClassList);
     active.classList.remove("active");
   });
 };
@@ -190,6 +194,4 @@ const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
 };
 
 const addition = () =>
-  store.index === store.productImages.length - 1
-    ? (store.index = 0)
-    : store.index++;
+  state.index === productImages.length - 1 ? (state.index = 0) : state.index++;

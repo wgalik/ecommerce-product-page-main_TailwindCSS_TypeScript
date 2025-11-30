@@ -17,6 +17,9 @@ import {
   showImage,
 } from "./functions";
 
+const { menuItems, productThumbnails } = store.data;
+const { state } = store;
+
 //  DOM Elements /////////////////////////////////////////////////
 const header = document.querySelector<HTMLElement>("header");
 const main = document.querySelector<HTMLElement>("main");
@@ -59,17 +62,19 @@ const thumbnails = [galleryThumbnails, lightboxThumbnails];
 // Events ///////////////////////////////////////////////////////
 
 window.addEventListener("resize", () => {
-  if (store.isLightboxOpen) return closeLightbox(lightbox);
-  if (store.isCartOpen) return closeCart(aside);
-  if (store.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
+  console.log(state.isLightboxOpen);
+
+  if (state.isLightboxOpen) return closeLightbox(lightbox);
+  if (state.isCartOpen) return closeCart(aside);
+  if (state.isMenuOpen) closeMenu(mainMenu, hamburgerBtn, bgDark);
 });
 
 document.addEventListener("keyup", (event: KeyboardEvent) => {
   if (event.code === "ArrowLeft" || event.code === "ArrowRight")
     return handleArrow(event, thumbnails);
   if (event.code === "Escape") {
-    if (store.isLightboxOpen) return closeLightbox(lightbox);
-    if (store.isCartOpen) return closeCart(aside);
+    if (state.isLightboxOpen) return closeLightbox(lightbox);
+    if (state.isCartOpen) return closeCart(aside);
   }
 });
 
@@ -94,7 +99,7 @@ submitBtn.addEventListener("click", () =>
   addToCart(badgeSpan, counterSpan, counterBtns[0]),
 );
 
-store.menu.forEach((menuItem) => {
+menuItems.forEach((menuItem) => {
   const li = document.createElement("li") as HTMLLIElement;
   const link = document.createElement("a") as HTMLAnchorElement;
   link.setAttribute("href", "#");
@@ -107,7 +112,7 @@ store.menu.forEach((menuItem) => {
 });
 
 thumbnails.forEach((array) => {
-  store.productThumbnails.forEach((item, index) => {
+  productThumbnails.forEach((item, index) => {
     const thumbnail = document.createElement("div") as HTMLDivElement;
     array.appendChild(thumbnail);
     thumbnail.style.backgroundImage = `url("${item}")`;
