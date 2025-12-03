@@ -12,7 +12,11 @@ import thumbnail_2 from "./assets/images/image-product-2-thumbnail.jpg";
 import thumbnail_3 from "./assets/images/image-product-3-thumbnail.jpg";
 import thumbnail_4 from "./assets/images/image-product-4-thumbnail.jpg";
 
-const Gallery = () => {
+interface GalleryProps {
+  handleLightbox: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+const Gallery: React.FC<GalleryProps> = ({ handleLightbox }) => {
   const [imageIndex, setImageIndex] = useState<number>(0);
 
   const productImages = [image_1, image_2, image_3, image_4];
@@ -65,7 +69,11 @@ const Gallery = () => {
   ));
   return (
     <section id="gallery">
-      <MainCarousel handleButton={handleButton} image={image} />
+      <MainCarousel
+        handleButton={handleButton}
+        handleLightbox={handleLightbox}
+        image={image}
+      />
       <div className="gallery-thumbnails thumbnails">{thumbnails}</div>
     </section>
   );

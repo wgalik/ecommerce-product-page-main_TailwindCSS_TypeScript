@@ -1,15 +1,17 @@
 interface MainCarouselProps {
   image: { backgroundImage: string };
   handleButton: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleLightbox: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const MainCarousel: React.FC<MainCarouselProps> = ({ image, handleButton }) => {
+const MainCarousel: React.FC<MainCarouselProps> = ({ image, handleButton, handleLightbox }) => {
   return (
     <div className="carousel">
       <div
         className="carousel-item main-image"
         id="carousel-main-image"
         style={image}
+        onClick={handleLightbox}
       ></div>
       <button
         onClick={(event) => handleButton(event)}
