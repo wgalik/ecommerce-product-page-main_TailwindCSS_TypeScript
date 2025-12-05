@@ -4,6 +4,10 @@ A solution for the **Frontend Mentor – E-commerce product page** challenge.
 
 This project recreates a fully responsive product page for a fictional sneaker company. It includes an image gallery with a lightbox, a shopping cart with full interactivity, a mobile navigation menu, and quantity controls—all built with accessibility and clean UI/UX in mind using **HTML, TypeScript**, and a custom **Tailwind CSS configuration** with components defined in `@layer components`.
 
+## 🌐 Live Demo
+
+➡️ https://wgalik.github.io/ecommerce-product-page-main_TailwindCSS_TypeScript/
+
 ## 🚀 Features
 
 ### 🖼️ Product Image Gallery
@@ -88,10 +92,6 @@ This challenge helped me strengthen:
 - Keyboard accessibility (Escape, Arrow keys)
 - Lightbox logic with shared thumbnail state
 
-## 🌐 Live Demo
-
-
-➡️ https://wgalik.github.io/ecommerce-product-page-main_TailwindCSS_TypeScript/
 
 ## 📝 Frontend Mentor
 
