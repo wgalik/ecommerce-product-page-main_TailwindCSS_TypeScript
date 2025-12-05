@@ -90,7 +90,7 @@ This challenge helped me strengthen:
 
 ## 🌐 Live Demo
 
-Add your deployed project link here:
+
 ➡️ https://wgalik.github.io/ecommerce-product-page-main_TailwindCSS_TypeScript/
 
 ## 📝 Frontend Mentor

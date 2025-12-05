@@ -32,6 +32,7 @@
       ></div>
       <nav aria-label="Main navigation">
         <button
+          type="button"
           id="hamburger-btn"
           aria-label="Toggle navigation menu"
           aria-controls="main-menu"
@@ -39,7 +40,7 @@
         ></button>
         <div id="logo" role="img" aria-label="Sneaker Company logo"></div>
         <ul id="main-menu" role="menubar"></ul>
-        <button id="cart-btn" aria-label="Open shopping cart">
+        <button id="cart-btn" aria-label="Open shopping cart" type="button">
           <svg
             aria-hidden="true"
             class="h-hull w-full"
@@ -58,7 +59,7 @@
     </header>
 
     <main
-      class="mt-20 flex w-full max-w-5xl flex-col items-center justify-start gap-4 sm:mt-40 sm:gap-8 sm:flex-row"
+      class="mt-20 flex w-full max-w-5xl flex-col items-center justify-start gap-4 sm:mt-40 sm:flex-row sm:gap-8"
     >
       <section id="gallery" aria-label="Product image gallery">
         <div class="carousel">
@@ -74,7 +75,8 @@
             type="button"
             aria-label="Previous image"
           >
-            <svg class="btn-prev"
+            <svg
+              class="btn-prev"
               ria-hidden="true"
               width="12"
               height="18"
@@ -94,7 +96,11 @@
             type="button"
             aria-label="Next image"
           >
-            <svg class="btn-next" ria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="btn-next"
+              ria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="m2 1 8 8-8 8"
                 stroke="currentColor"
@@ -174,7 +180,11 @@
               </svg>
             </button>
           </div>
-          <button type="submit" aria-label="Add selected items to cart" class="transition-300">
+          <button
+            type="submit"
+            aria-label="Add selected items to cart"
+            class="transition-300"
+          >
             <svg
               aria-hidden="true"
               class="aspect-square h-4.5"
@@ -228,7 +238,9 @@
             </svg>
           </button>
         </div>
-        <button type="button" id="checkout" class="transition-300">Checkout</button>
+        <button type="button" id="checkout" class="transition-300">
+          Checkout
+        </button>
       </div>
     </aside>
     <div
@@ -238,7 +250,8 @@
       aria-label="Full screen product gallery"
     >
       <div class="lightbox-container">
-        <button class="transition-300"
+        <button
+          class="transition-300"
           type="button"
           id="lightbox-close-btn"
           aria-label="Close gallery"
@@ -268,7 +281,8 @@
             type="button"
             aria-label="Previous image"
           >
-            <svg class="btn-prev"
+            <svg
+              class="btn-prev"
               width="12"
               height="18"
               xmlns="http://www.w3.org/2000/svg"
@@ -288,7 +302,11 @@
             type="button"
             aria-label="Next image"
           >
-            <svg class="btn-next" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg
+              class="btn-next"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
               <path
                 d="m2 1 8 8-8 8"
                 stroke="currentColor"
