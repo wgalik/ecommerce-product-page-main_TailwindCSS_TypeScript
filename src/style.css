@@ -25,6 +25,30 @@
 }
 
 @layer components {
+  section {
+    @apply grid w-full gap-6 sm:basis-1/2 sm:p-8;
+  }
+
+  .main-image {
+    @apply aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:rounded-2xl;
+  }
+  .carousel-btn,
+  .lightbox-btn {
+    @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90;
+    &:active {
+      svg {
+        @apply scale-90;
+      }
+    }
+  }
+
+  .thumbnails {
+    @apply relative hidden h-25 items-start justify-between gap-6 sm:flex;
+    .thumbnail {
+      @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
+    }
+  }
+
   header {
     nav {
       @apply flex h-full w-full max-w-5xl items-center justify-start gap-4 sm:h-28 sm:gap-10 sm:border-b sm:border-(--grayishBlue);
@@ -51,55 +75,36 @@
         }
       }
       #avatar {
-        @apply aspect-square w-8 cursor-pointer rounded-full bg-[url("../images/image-avatar.png")] bg-cover bg-center bg-no-repeat outline outline-transparent transition duration-300 ease-in-out hover:outline-(--orange) sm:w-12 sm:outline-2;
+        @apply aspect-square w-8 cursor-pointer rounded-full bg-[url("../images/image-avatar.png")] bg-cover bg-center bg-no-repeat outline outline-transparent hover:outline-(--orange) sm:w-12 sm:outline-2;
       }
     }
   }
 
   #gallery {
-    @apply grid w-full gap-4 sm:basis-1/2 sm:p-8;
-
     .carousel {
       @apply relative;
     }
     .carousel-item {
-      @apply aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:cursor-pointer sm:rounded-2xl;
+      @apply sm:cursor-pointer;
     }
-    button {
-      @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90 sm:hidden;
+    .carousel-btn {
+      @apply sm:hidden;
       &.carousel-btn-prev {
         @apply left-4;
-        svg {
-          @apply h-5 w-4;
-        }
       }
       &.carousel-btn-next {
         @apply right-4;
-        svg {
-          @apply h-5 w-3;
-        }
-      }
-      &:active {
-        svg {
-          @apply scale-90;
-        }
-      }
-    }
-    .thumbnails {
-      @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
-      div {
-        @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
       }
     }
   }
 
   #offer-card {
-    @apply grid gap-4 px-4 sm:basis-1/2 sm:p-8;
+    @apply gap-6 px-4;
     h1 {
       @apply text-xs font-bold tracking-widest text-(--darkGrayishBlue) uppercase;
     }
     h2 {
-      @apply text-3xl font-bold;
+      @apply text-3xl font-bold sm:text-[clamp(1.875rem,4vw,2.75rem)];
     }
     p {
       @apply text-(--darkGrayishBlue);
@@ -121,7 +126,7 @@
       @apply flex w-full flex-col items-center justify-center gap-4 sm:flex-row;
       .counter {
         @apply flex h-10 w-full items-center justify-between rounded-lg bg-(--lightGrayishBlue) sm:basis-2/5;
-        button {
+        .counter-btn {
           @apply basis-10 cursor-pointer rounded-lg fill-(--orange) p-4 transition duration-300 ease-in-out hover:fill-(--paleOrange) active:fill-(--orange);
           &:disabled {
             @apply cursor-auto fill-(--paleOrange);
@@ -132,7 +137,7 @@
         }
       }
       [type="submit"] {
-        @apply flex h-10 w-full flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold transition duration-300 ease-in-out hover:bg-(--paleOrange);
+        @apply flex h-10 w-full flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold hover:bg-(--paleOrange);
       }
     }
   }
@@ -162,47 +167,41 @@
           @apply col-start-3 col-end-4 cursor-pointer justify-self-end hover:scale-110 active:scale-100;
         }
       }
-      [type="button"] {
-        @apply row-start-2 row-end-3 flex h-10 w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold transition duration-300 ease-in-out hover:bg-(--paleOrange);
+      #checkout {
+        @apply row-start-2 row-end-3 flex h-10 w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold hover:bg-(--paleOrange);
       }
     }
   }
   #lightbox {
     @apply absolute inset-0 z-99 hidden items-center justify-center bg-(--black)/75;
     .lightbox-container {
-      @apply grid w-9/10 max-w-120 gap-4;
+      @apply grid w-9/10 max-w-120 gap-6;
       #lightbox-close-btn {
-        @apply cursor-pointer justify-self-end fill-(--orange) transition duration-300 ease-in-out hover:fill-(--paleOrange);
+        @apply cursor-pointer justify-self-end fill-(--orange) hover:fill-(--paleOrange);
       }
       .lightbox-item {
-        @apply relative aspect-square w-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-linear sm:rounded-2xl;
+        @apply relative;
       }
       .lightbox-btn {
-        @apply absolute top-1/2 flex aspect-square w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-(--white) text-(--black) transition-colors duration-300 ease-in-out hover:text-(--orange) active:scale-90;
         &.lightbox-btn-prev {
           @apply -left-5.5;
-          svg {
-            @apply h-5 w-4;
-          }
         }
         &.lightbox-btn-next {
           @apply -right-5.5;
-          svg {
-            @apply h-5 w-3;
-          }
-        }
-        &:active {
-          svg {
-            @apply scale-90;
-          }
-        }
-      }
-      .lightbox-thumbnails {
-        @apply relative hidden h-25 items-start justify-between gap-4 sm:flex;
-        div {
-          @apply relative aspect-square w-10 grow cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat text-(--orange) transition duration-300 ease-in-out hover:opacity-50;
         }
       }
     }
+  }
+}
+
+@layer utilities {
+  .btn-prev {
+    @apply h-5 w-4;
+  }
+  .btn-next {
+    @apply h-5 w-3;
+  }
+  .transition-300 {
+    @apply transition duration-300 ease-in-out;
   }
 }

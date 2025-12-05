@@ -2,28 +2,32 @@
 
 A solution for the **Frontend Mentor – E-commerce product page** challenge.
 
-This project recreates a fully responsive product page for a fictional sneaker company. It includes an image gallery with a lightbox, a shopping cart with full interactivity, a mobile navigation menu, and quantity controls—all built with accessibility and clean UI/UX in mind.
+This project recreates a fully responsive product page for a fictional sneaker company. It includes an image gallery with a lightbox, a shopping cart with full interactivity, a mobile navigation menu, and quantity controls—all built with accessibility and clean UI/UX in mind using **HTML, TypeScript**, and a custom **Tailwind CSS configuration** with components defined in `@layer components`.
 
 ## 🚀 Features
 
 ### 🖼️ Product Image Gallery
 
+- Main product image with animated transitions
 - Carousel navigation (prev/next buttons).
 - Click-to-open lightbox with full-screen images.
 - Thumbnail selection with active state.
+- Keyboard support (Escape to close).
 
 ### 🛒 Shopping Cart
 
-- Add/remove items.
-- Dynamic calculation of price × quantity.
+- Add/remove items with dynamic price calculation.
+- Styled container with responsive layout.
 - Cart badge updates in real time.
 - “Empty cart” fallback state.
 
 ### 📱 Mobile Navigation
 
-- Hamburger menu with overlay.
+- Hamburger menu with slide-in animation.
 - Smooth transitions and accessible ARIA attributes.
 - Click outside to close.
+- Overlay lock for scroll prevention.
+- Responsive desktop nav with hover underline animation.
 
 ### ↕️ Quantity Selector
 
@@ -31,16 +35,24 @@ This project recreates a fully responsive product page for a fictional sneaker c
 
 ### 🎨 Styled with Tailwind CSS
 
-- Fully custom design based on challenge style guide.
-- Lightbox overlay, animations, responsive grid layout, and utility-based styling.
+Tailwind layer structure is fully used:
 
-### 🧠 State Management
+- **@layer base** → CSS variables, typography.
+- **@layer components** → reusable UI elements (buttons, thumbnails, cart, menu, lightbox…).
+- **@layer utilities** → helpers (transition, icons, sizes).
 
-- Simple global state store that tracks:
+This makes the project maintainable and scalable.
+
+### 🧠 Simple Global Store in TypeScript
+
+Simple global state store that tracks:
+
 - Current image index
 - Cart quantity
 - Counter value
 - UI states (menu, cart, lightbox)
+
+  All logic is fully typed.
 
 ## 🛠️ Tech Stack
 
@@ -81,7 +93,7 @@ This challenge helped me strengthen:
 Add your deployed project link here:
 ➡️ https://wgalik.github.io/ecommerce-product-page-main_TailwindCSS_TypeScript/
 
-##📝 Frontend Mentor
+## 📝 Frontend Mentor
 
 This project is a solution to:
 https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6

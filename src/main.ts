@@ -139,6 +139,7 @@ thumbnails.forEach((array) => {
     const thumbnail = document.createElement("div") as HTMLDivElement;
     array.appendChild(thumbnail);
     thumbnail.style.backgroundImage = `url("${item}")`;
+    thumbnail.classList.add("thumbnail")
     thumbnail.dataset.key = String(index);
     thumbnail.addEventListener("click", (event) =>
       handleThumbnail(event, thumbnails),
