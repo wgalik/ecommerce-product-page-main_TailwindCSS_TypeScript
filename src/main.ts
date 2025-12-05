@@ -3,6 +3,7 @@ import { store } from "./store";
 import {
   addActiveClass,
   addToCart,
+  clearCart,
   closeCart,
   closeMenu,
   closeLightbox,
@@ -17,7 +18,7 @@ import {
   showImage,
 } from "./functions";
 
-const { menuItems, productThumbnails } = store.data;
+const { menuItems, productName, productPrice, productThumbnails } = store.data;
 const { state } = store;
 
 //  DOM Elements /////////////////////////////////////////////////
@@ -44,8 +45,17 @@ const counterSpan = main.querySelector<HTMLSpanElement>("#counter")!;
 const galleryThumbnails = main.querySelector<HTMLElement>(
   ".gallery-thumbnails",
 )!;
+const productTitle = main.querySelector<HTMLHeadingElement>("#product-title")!;
+const priceTag = main.querySelector<HTMLSpanElement>("#product-price")!;
 const submitBtn = main.querySelector<HTMLButtonElement>(
   "button[type='submit']",
+)!;
+
+const cartContainer = aside.querySelector<HTMLDivElement>(".cart-container")!;
+const checkoutBtn = aside.querySelector<HTMLButtonElement>("#checkout")!;
+const emptyCartMsg = aside.querySelector<HTMLHeadingElement>("#emptyCart")!;
+const resetCartBtn = aside.querySelector<HTMLButtonElement>(
+  "button[type='reset']",
 )!;
 
 const lightboxBtns =
@@ -80,7 +90,10 @@ carouselBtns.forEach((button) =>
   button.addEventListener("click", (event) => handleButton(event, thumbnails)),
 );
 carouselItem.addEventListener("click", () => handleLightbox(lightbox));
-cartBtn.addEventListener("click", () => handleCart(aside, cartBtn));
+cartBtn.addEventListener("click", () =>
+  handleCart(aside, cartBtn, emptyCartMsg, cartContainer),
+);
+checkoutBtn.addEventListener("click", () => closeCart(aside));
 counterBtns.forEach((button) =>
   button.addEventListener("click", (event) =>
     compute(event, counterBtns[0], counterSpan),
@@ -93,14 +106,26 @@ lightboxBtns.forEach((button) =>
   button.addEventListener("click", (event) => handleButton(event, thumbnails)),
 );
 lightboxCloseBtn.addEventListener("click", () => closeLightbox(lightbox));
+resetCartBtn.addEventListener("click", () =>
+  clearCart(aside, emptyCartMsg, cartContainer),
+);
 submitBtn.addEventListener("click", () =>
-  addToCart(badgeSpan, counterSpan, counterBtns[0]),
+  addToCart(
+    badgeSpan,
+    counterSpan,
+    counterBtns[0],
+    cartContainer,
+    aside,
+    emptyCartMsg,
+  ),
 );
 
 menuItems.forEach((menuItem) => {
   const li = document.createElement("li") as HTMLLIElement;
   const link = document.createElement("a") as HTMLAnchorElement;
+  li.setAttribute("role", "none");
   link.setAttribute("href", "#");
+  link.setAttribute("role", "menuitem");
   link.innerHTML = menuItem;
   li.appendChild(link);
   mainMenu.appendChild(li);
@@ -120,6 +145,9 @@ thumbnails.forEach((array) => {
     );
   });
 });
+
+productTitle.innerHTML = productName;
+priceTag.innerHTML = String(productPrice.toFixed(2));
 
 renderCounter(counterBtns[0], counterSpan);
 showImage();

@@ -22,20 +22,26 @@
   </head>
 
   <body class="flex h-dvh items-start justify-center">
-    <div></div>
     <header
       class="fixed top-0 left-0 z-50 flex h-20 w-full items-center justify-center gap-4 bg-white p-4 sm:h-28"
     >
       <div
         id="bg-dark"
         class="absolute inset-0 z-60 hidden h-dvh w-dvw bg-black/75 sm:hidden"
+        aria-hidden="true"
       ></div>
-      <nav>
-        <button id="hamburger-btn" class=""></button>
-        <div id="logo"></div>
-        <ul id="main-menu"></ul>
-        <button id="cart-btn">
+      <nav aria-label="Main navigation">
+        <button
+          id="hamburger-btn"
+          aria-label="Toggle navigation menu"
+          aria-controls="main-menu"
+          aria-expanded="false"
+        ></button>
+        <div id="logo" role="img" aria-label="Sneaker Company logo"></div>
+        <ul id="main-menu" role="menubar"></ul>
+        <button id="cart-btn" aria-label="Open shopping cart">
           <svg
+            aria-hidden="true"
             class="h-hull w-full"
             viewBox="0 0 24 24"
             preserveAspectRatio="xMidYMid meet"
@@ -47,22 +53,33 @@
           </svg>
           <span id="badge"></span>
         </button>
-        <div id="avatar"></div>
+        <div id="avatar" alt="User profile"></div>
       </nav>
     </header>
 
     <main
       class="mt-20 flex w-full max-w-5xl flex-col items-center justify-start gap-4 sm:mt-40 sm:flex-row"
     >
-      <section id="gallery">
+      <section id="gallery" aria-label="Product image gallery">
         <div class="carousel">
-          <div class="carousel-item main-image" id="carousel-main-image"></div>
+          <div
+            class="carousel-item main-image"
+            id="carousel-main-image"
+            role="img"
+            aria-label="Main product image"
+          ></div>
           <button
             class="carousel-btn carousel-btn-prev"
             value="prev"
             type="button"
+            aria-label="Previous image"
           >
-            <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              ria-hidden="true"
+              width="12"
+              height="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M11 1 3 9l8 8"
                 stroke="currentColor"
@@ -75,8 +92,9 @@
             class="carousel-btn carousel-btn-next"
             value="next"
             type="button"
+            aria-label="Next image"
           >
-            <svg xmlns="http://www.w3.org/2000/svg">
+            <svg ria-hidden="true" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="m2 1 8 8-8 8"
                 stroke="currentColor"
@@ -87,24 +105,37 @@
             </svg>
           </button>
         </div>
-        <div class="gallery-thumbnails thumbnails"></div>
+        <div
+          class="gallery-thumbnails thumbnails"
+          aria-label="Image thumbnails"
+        ></div>
       </section>
       <section id="offer-card">
-        <h2>Sneaker Company</h2>
-        <h1>Fall Limited Edition Sneakers</h1>
+        <h2 class="sr-only">Product summary</h2>
+        <h1>Sneaker Company</h1>
+        <h2 id="product-title"></h2>
         <p>
           These low-profile sneakers are your perfect casual wear companion.
           Featuring a durable rubber outer sole, they’ll withstand everything
           the weather can offer.
         </p>
-        <div id="price-tag">
-          <h4>$125.00 <span>50%</span></h4>
-          <h5>$250.00</h5>
+        <div id="price-tag" aria-label="Product pricing">
+          <h3>
+            $<span id="product-price"></span>
+            <span id="discount" aria-label="50 percent discount">50%</span>
+          </h3>
+          <p id="original-price" aria-label="Original price">$250.00</p>
         </div>
         <div class="counter-container">
           <div class="counter">
-            <button type="button" id="subtraction" class="counter-btn">
+            <button
+              type="button"
+              id="subtraction"
+              class="counter-btn"
+              aria-label="Decrease quantity"
+            >
               <svg
+                aria-hidden="true"
                 width="12"
                 height="4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,8 +151,14 @@
               </svg>
             </button>
             <span id="counter"></span>
-            <button type="button" id="addition" class="counter-btn">
+            <button
+              type="button"
+              id="addition"
+              class="counter-btn"
+              aria-label="Increase quantity"
+            >
               <svg
+                aria-hidden="true"
                 width="12"
                 height="12"
                 xmlns="http://www.w3.org/2000/svg"
@@ -137,8 +174,9 @@
               </svg>
             </button>
           </div>
-          <button type="submit">
+          <button type="submit" aria-label="Add selected items to cart">
             <svg
+              aria-hidden="true"
               class="aspect-square h-4.5"
               viewBox="0 0 24 24"
               preserveAspectRatio="xMidYMid meet"
@@ -154,14 +192,63 @@
         </div>
       </section>
     </main>
-    <aside id="cart">
+    <aside id="cart" aria-label="Shopping cart">
       <h2>Cart</h2>
-      <h3>Your cart is empty.</h3>
+      <p id="emptyCart">Your cart is empty.</p>
+      <div class="cart-container">
+        <div class="cart-item">
+          <div
+            class="cart-thumbnail"
+            role="img"
+            aria-label="Product thumbnail"
+          ></div>
+          <div class="cart-pricetag">
+            <p id="cart-product-name"></p>
+            <p id="cart-price">
+              $<span class="price"></span> x
+              <span class="multiply"></span>
+              <span class="final-price"></span>
+            </p>
+          </div>
+          <button type="reset" aria-label="Remove item from cart">
+            <svg
+              aria-hidden="true"
+              width="20"
+              height="24"
+              fill="#C3CAD9"
+              fill-rule="nonzero"
+              xlink:href="#a"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <path
+                d="M0 2.625V1.75C0 1.334.334 1 .75 1h3.5l.294-.584A.741.741 0 0 1 5.213 0h3.571a.75.75 0 0 1 .672.416L9.75 1h3.5c.416 0 .75.334.75.75v.875a.376.376 0 0 1-.375.375H.375A.376.376 0 0 1 0 2.625Zm13 1.75V14.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 14.5V4.375C1 4.169 1.169 4 1.375 4h11.25c.206 0 .375.169.375.375ZM4.5 6.5c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Z"
+                id="a"
+              />
+            </svg>
+          </button>
+        </div>
+        <button type="button" id="checkout">Checkout</button>
+      </div>
     </aside>
-    <div id="lightbox">
+    <div
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Full screen product gallery"
+    >
       <div class="lightbox-container">
-        <button type="button" id="lightbox-close-btn">
-          <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
+        <button
+          type="button"
+          id="lightbox-close-btn"
+          aria-label="Close gallery"
+        >
+          <svg
+            width="14"
+            height="15"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path
               d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
               fill="current-color"
@@ -169,13 +256,24 @@
             />
           </svg>
         </button>
-        <div class="lightbox-item main-image" id="lightbox-main-image">
+        <div
+          class="lightbox-item main-image"
+          id="lightbox-main-image"
+          role="img"
+          aria-label="Zoomed product image"
+        >
           <button
             class="lightbox-btn lightbox-btn-prev"
             value="prev"
             type="button"
+            aria-label="Previous image"
           >
-            <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="12"
+              height="18"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
               <path
                 d="M11 1 3 9l8 8"
                 stroke="currentColor"
@@ -188,8 +286,9 @@
             class="lightbox-btn lightbox-btn-next"
             value="next"
             type="button"
+            aria-label="Next image"
           >
-            <svg xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path
                 d="m2 1 8 8-8 8"
                 stroke="currentColor"
@@ -201,7 +300,10 @@
           </button>
         </div>
 
-        <div class="lightbox-thumbnails thumbnails"></div>
+        <div
+          class="lightbox-thumbnails thumbnails"
+          aria-label="Lightbox thumbnails"
+        ></div>
       </div>
     </div>
     <script type="module" src="./src/main.ts"></script>

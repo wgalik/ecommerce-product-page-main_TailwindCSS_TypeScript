@@ -36,17 +36,9 @@ export const store = {
 
     productImages: [image_1, image_2, image_3, image_4],
 
+    productName: "Fall Limited Edition Sneakers",
+    productPrice: 125,
+
     productThumbnails: [thumbnail_1, thumbnail_2, thumbnail_3, thumbnail_4],
   },
-
-  // methods: {
-  //   setCart: (value: number) => (store.state.cart += value),
-  //   setCounter: (value: number) => (store.state.counter += value),
-  //   setIndex: (value: number) => (store.state.index += value),
-  //   setIsCartOpen: (value: boolean) => (store.state.isCartOpen = value),
-  //   setIsMenuOpen: (value: boolean) => (store.state.isMenuOpen = value),
-  //   setIsLightboxOpen: (value: boolean) => (store.state.isLightboxOpen = value),
-  //   setWindowInnerWidthREM: (value: number) =>
-  //     (store.state.windowInnerWidthREM = value),
-  // },
 };

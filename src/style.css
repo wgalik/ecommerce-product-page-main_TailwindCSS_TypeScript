@@ -1,3 +1,5 @@
+/* tailwindcss */
+
 @import "tailwindcss";
 
 @layer base {
@@ -39,7 +41,7 @@
         @apply absolute top-0 -left-70 z-100 flex h-dvh w-70 flex-col items-start justify-start gap-4 bg-(--white) p-4 pt-25 transition-all duration-500 ease-linear sm:static sm:h-full sm:w-auto sm:flex-row sm:items-center sm:gap-6 sm:p-0;
 
         li {
-          @apply border-b-4 border-transparent pb-1 font-bold text-(--black) transition duration-300 ease-in-out hover:border-(--orange) sm:py-11 sm:text-sm sm:font-normal sm:text-(--darkGrayishBlue);
+          @apply border-b-4 border-transparent pb-1 font-bold text-(--black) transition duration-300 ease-in-out hover:border-(--orange) sm:py-11 sm:text-sm sm:font-normal sm:text-(--darkGrayishBlue) sm:hover:text-(--black);
         }
       }
       #cart-btn {
@@ -93,10 +95,10 @@
 
   #offer-card {
     @apply grid gap-4 px-4 sm:basis-1/2 sm:p-8;
-    h2 {
+    h1 {
       @apply text-xs font-bold tracking-widest text-(--darkGrayishBlue) uppercase;
     }
-    h1 {
+    h2 {
       @apply text-3xl font-bold;
     }
     p {
@@ -104,13 +106,13 @@
     }
     #price-tag {
       @apply flex items-center justify-between gap-2 sm:flex-col sm:items-start;
-      h4 {
+      h3 {
         @apply text-3xl font-bold sm:text-2xl;
-        span {
+        #discount {
           @apply ml-2 inline-block rounded-md bg-(--black) px-2 align-[6px] text-base font-bold text-(--white) sm:align-[3px];
         }
       }
-      h5 {
+      #original-price {
         @apply text-base font-bold text-(--darkGrayishBlue) line-through;
       }
     }
@@ -136,15 +138,35 @@
   }
 
   #cart {
-    @apply absolute top-22 z-50 hidden h-70 w-95/100 max-w-90 -translate-x-1/2 grid-rows-4 rounded-lg bg-(--white) shadow-2xl/50 sm:translate-x-0;
+    @apply absolute top-22 z-50 hidden min-h-50 w-95/100 max-w-90 -translate-x-1/2 grid-rows-4 rounded-lg bg-(--white) shadow-2xl/50 sm:translate-x-0;
     h2 {
       @apply border-b border-(--grayishBlue) p-4 text-base font-bold;
     }
-    h3 {
+    p {
       @apply self-end justify-self-center text-base font-bold text-(--darkGrayishBlue);
     }
+    .cart-container {
+      @apply row-start-2 row-end-5 hidden gap-4 p-4;
+      .cart-item {
+        @apply row-start-1 row-end-2 grid grid-cols-[1fr_6fr_1fr] gap-4;
+        .cart-thumbnail {
+          @apply col-start-1 col-end-2 aspect-square rounded-lg bg-cover bg-center bg-no-repeat;
+        }
+        p {
+          @apply justify-self-start text-base font-normal text-(--grayishBlue);
+          .final-price {
+            @apply font-bold text-(--black);
+          }
+        }
+        [type="reset"] {
+          @apply col-start-3 col-end-4 cursor-pointer justify-self-end hover:scale-110 active:scale-100;
+        }
+      }
+      [type="button"] {
+        @apply row-start-2 row-end-3 flex h-10 w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-lg bg-(--orange) text-base font-bold transition duration-300 ease-in-out hover:bg-(--paleOrange);
+      }
+    }
   }
-
   #lightbox {
     @apply absolute inset-0 z-99 hidden items-center justify-center bg-(--black)/75;
     .lightbox-container {

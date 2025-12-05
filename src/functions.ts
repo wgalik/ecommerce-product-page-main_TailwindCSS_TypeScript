@@ -3,7 +3,14 @@ import { store } from "./store";
 import closeMenuBtn from "./images/icon-close.svg";
 import openMenuBtn from "./images/icon-menu.svg";
 
-const { activeThumbnailClassList, breakpoints, productImages } = store.data;
+const {
+  activeThumbnailClassList,
+  breakpoints,
+  productImages,
+  productName,
+  productPrice,
+  productThumbnails,
+} = store.data;
 
 const { state } = store;
 
@@ -19,6 +26,9 @@ export const addToCart = (
   badgeSpan: HTMLSpanElement,
   counterSpan: HTMLSpanElement,
   counterBtn: HTMLButtonElement,
+  cartContainer: HTMLDivElement,
+  aside: HTMLElement,
+  emptyCartMsg: HTMLHeadingElement,
 ) => {
   state.cart += state.counter;
   if (!state.cart) return (badgeSpan.style.display = "none");
@@ -26,6 +36,16 @@ export const addToCart = (
   badgeSpan.innerHTML = String(state.cart);
   state.counter = 0;
   renderCounter(counterBtn, counterSpan);
+  renderCart(cartContainer, aside, emptyCartMsg);
+};
+
+export const clearCart = (
+  aside: HTMLElement,
+  emptyCartMsg: HTMLHeadingElement,
+  cartContainer: HTMLDivElement,
+) => {
+  state.cart = 0;
+  openCart(aside, emptyCartMsg, cartContainer);
 };
 
 export const closeCart = (aside: HTMLElement) => {
@@ -78,7 +98,12 @@ export const handleButton = (
   slideImage(value, thumbnails);
 };
 
-export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
+export const handleCart = (
+  aside: HTMLElement,
+  cartBtn: HTMLButtonElement,
+  emptyCartMsg: HTMLHeadingElement,
+  cartContainer: HTMLDivElement,
+) => {
   if (state.isCartOpen) return closeCart(aside);
 
   checkWindowWidth();
@@ -92,7 +117,7 @@ export const handleCart = (aside: HTMLElement, cartBtn: HTMLButtonElement) => {
   if (state.windowInnerWidthREM > breakpoints.lg) {
     aside.style.left = `${rect.right - 180}px`;
   }
-  openCart(aside);
+  openCart(aside, emptyCartMsg, cartContainer);
 };
 
 export const handleMenu = (
@@ -138,8 +163,8 @@ export const showImage = () => {
   mainImage.forEach((div) => (div.style.backgroundImage = `url("${image}")`));
 };
 
-const subtraction = () =>
-  !state.index ? (state.index = productImages.length - 1) : state.index--;
+const addition = () =>
+  state.index === productImages.length - 1 ? (state.index = 0) : state.index++;
 
 const checkWindowWidth = () => {
   const windowInnerWidthPX = window.innerWidth;
@@ -149,9 +174,20 @@ const checkWindowWidth = () => {
   state.windowInnerWidthREM = windowInnerWidthPX / clientFontSize;
 };
 
-const openCart = (aside: HTMLElement) => {
+const openCart = (
+  aside: HTMLElement,
+  emptyCartMsg: HTMLHeadingElement,
+  cartContainer: HTMLDivElement,
+) => {
   aside.classList.add("grid");
-  state.isCartOpen = !state.isCartOpen;
+  state.isCartOpen = true;
+  if (!state.cart) {
+    emptyCartMsg.classList.remove("hidden");
+    cartContainer.classList.remove("grid");
+    return;
+  }
+  emptyCartMsg.classList.add("hidden");
+  cartContainer.classList.add("grid");
 };
 
 const openMenu = (
@@ -179,6 +215,32 @@ const removeActiveClass = () => {
   });
 };
 
+const renderCart = (
+  cartContainer: HTMLDivElement,
+  aside: HTMLElement,
+  emptyCartMsg: HTMLHeadingElement,
+) => {
+  const cartThumbnail =
+    cartContainer.querySelector<HTMLDivElement>(".cart-thumbnail")!;
+  const cartProductName =
+    cartContainer.querySelector<HTMLHeadingElement>("#cart-product-name")!;
+  const priceSpan =
+    cartContainer.querySelector<HTMLSpanElement>("#cart-price .price")!;
+  const multiply = cartContainer.querySelector<HTMLSpanElement>(
+    "#cart-price .multiply",
+  )!;
+  const finalPrice = cartContainer.querySelector<HTMLSpanElement>(
+    "#cart-price .final-price",
+  )!;
+  cartThumbnail.style.backgroundImage = `url("${productThumbnails[0]}")`;
+  cartProductName.innerHTML = productName;
+  priceSpan.innerHTML = String(productPrice.toFixed(2));
+  multiply.innerHTML = String(state.cart);
+  finalPrice.innerHTML = `$${String((productPrice * state.cart).toFixed(2))}`;
+  if (!state.isCartOpen) return;
+  openCart(aside, emptyCartMsg, cartContainer);
+};
+
 const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
   switch (value) {
     case "prev":
@@ -193,5 +255,5 @@ const slideImage = (value: string, thumbnails: Array<HTMLElement>) => {
   showImage();
 };
 
-const addition = () =>
-  state.index === productImages.length - 1 ? (state.index = 0) : state.index++;
+const subtraction = () =>
+  !state.index ? (state.index = productImages.length - 1) : state.index--;
